@@ -1,0 +1,6 @@
+.container table {
+  border-collapse: collapse;
+}
+.container table th, .container table td {
+  border: solid 1px black;
+}

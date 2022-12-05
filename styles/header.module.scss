@@ -1,0 +1,19 @@
+.hamburgerFlag {}
+
+.overlay {}
+
+header {
+  .headerLogoWrapper {
+    a {
+      img {}
+    }
+  }
+
+  .signAreaWrapper {
+    display: none;
+
+    .signOutBtn {}
+
+    .acountDeleteBtn {}
+  }
+}
