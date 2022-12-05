@@ -1,6 +1,9 @@
 .container table {
   border-collapse: collapse;
 }
+.container table tr > td > input[name=status_flag] {
+  display: none;
+}
 .container table th, .container table td {
   border: solid 1px black;
 }
