@@ -2,31 +2,25 @@ import { Link as Scroll } from 'react-scroll';
 import Link from 'next/link';
 import Image from 'next/image';
 import headerStyles from '../styles/header.module.css';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, createContext } from 'react';
+export const ParentContext = createContext();
+import { Modal } from './index';
 
 export default function Header(props) {
   const modalFlag = useRef(null);
-  const modalBody = useRef(null);
-  const modalFooter = useRef(null);
-  const Modal = useRef(null);
   const Overlay = useRef(null);
+  const modalRef = useRef(null);
 
-  function overLayClose() {
-    Modal.current.animate({
-      transform: ['translateY(0px)', 'translateY(-50px)'],
-      visibility: ['visible', 'hidden'],
-      opacity: [1, 0]
-    },{
-      fill: 'forwards',
-      duration: 150
-    });
-    modalFlag.current.checked = false;
+  const value = {
+    modalFlag: modalFlag,
+    Overlay: Overlay,
+    modalRef: modalRef
   }
 
   function checkSignOut() {
     modalFlag.current.checked = true;
     Overlay.current.style.zIndex = 2;
-    Modal.current.animate({
+    modalRef.current.animate({
       transform: ['translateY(-50px)', 'translateY(0px)'],
       visibility: ['hidden', 'visible'],
       opacity: [0, 1]
@@ -38,15 +32,15 @@ export default function Header(props) {
 
   function checkAcountDelete() {}
 
+  useEffect(()=> {
+    // console.log(modalFlag.current);
+  })
+
   return(
     <>
-      <input type="checkbox" id="hamburger_flag" className={headerStyles.modalFlag} ref={modalFlag} />
-      <div className={headerStyles.overlay} ref={Overlay} onClick={overLayClose}>
-        <div className={headerStyles.modal} onClick={(e)=> {e.preventDefault(); e.stopPropagation();}} ref={Modal}>
-          <div className={headerStyles.modalBody} ref={modalBody}></div>
-          <div className={headerStyles.modalFooter} ref={modalFooter}></div>
-        </div>
-      </div>
+      <ParentContext.Provider value={value}>
+        <Modal />
+      </ParentContext.Provider>
       <header>
         <div className={headerStyles.headerLogoWrapper}>
           <Scroll to="to" smooth={true} duration={600}>
