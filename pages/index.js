@@ -46,7 +46,7 @@ export default function Index({data}) {
           {'品名': '牛乳', '価格': 150, '個数': 1, 'status': 0},
           {'品名': 'ブロッコリースプラウト', '価格': 110, '個数': 1, 'status': 1}
         ];
-        return items;
+    return items;
   }
   
   //serverSidePropsに記述する（tbodyにレンダリングするデータ）※関数ではなく、変数であることに注意。
@@ -58,9 +58,12 @@ export default function Index({data}) {
           <td>{item['品名']}</td>
           <td>{item['価格']} 円</td>
           <td>
-            <label htmlFor="update_item_number">
-              <input type="number" min="0" name="update_item_number" id={'update_item_number'+ index} key={index} ref={updateItemNumberRefs.current[index]} /> 個
-            </label>
+            <div className={indexStyles.spinnerWrapper}>
+              <span className={indexStyles.spinnerDown} onClick={(e)=> {spinnerUpDown(e, 'Decrease')}}></span>
+              <input type="number" min="0" name="update_item_number" step="1" id={'update_item_number'+ index} key={index} ref={updateItemNumberRefs.current[index]} />
+              <span className={indexStyles.spinnerUp} onClick={(e)=> {spinnerUpDown(e, 'Increase')}} id={index}></span>
+            </div>
+            <label htmlFor="update_item_number">&nbsp;個</label>
           </td>
           <td>
             <input type="checkbox" name="status_flag" id="status_flag" />
@@ -72,6 +75,20 @@ export default function Index({data}) {
     }
   });
 
+  //増減ボタン
+  function spinnerUpDown(e, status) {
+    if(status == 'Decrease') {
+      const target = e.target;
+      const number = target.nextElementSibling;
+      number.stepDown();
+    }
+    else if(status == 'Increase') { //ーボタン
+      const target = e.target;
+      const number = target.previousElementSibling;
+      number.stepUp();
+    }
+  }
+
   function setListItem() {
     Items().forEach((item, index)=> {
       updateItemNumberRefs.current[index].current.value = item['個数'];
@@ -81,6 +98,7 @@ export default function Index({data}) {
   useEffect(()=> {
     signAreaShow();
     setListItem();
+    //各データの削除ボタンが機能しているか確認
     Items().map((e, i)=> {
       itemDeleteBtnRefs.current[i].current.addEventListener('click', (e)=> {
         console.log(e.target.id);
@@ -111,14 +129,18 @@ export default function Index({data}) {
             </div>
             <div>
               <label htmlFor="regist_item_number">個数</label>
-              <input type="number" min="0" name="regist_item_number" id="regist_item_number" />
+              <div className={indexStyles.spinnerWrapper}>
+                <span className={indexStyles.spinnerDown}></span>
+                <input type="number" min="0" name="regist_item_number" id="regist_item_number" />
+                <span className={indexStyles.spinnerUp}></span>
+              </div>
             </div>
             <div><input type="submit" value="新規商品登録" /></div>
           </form>
           <form onSubmit={(e)=> {e.preventDefault}} id="item_update">
             <table>
               <tbody ref={tbody}>
-                {itemList}
+                {itemList} {/*動的なレイアウトは上記で定義*/}
               </tbody>
             </table>
           </form>

@@ -1,5 +1,59 @@
 .container {
-  .registItem {}
+  .spinnerWrapper {
+    display: flex;
+    justify-content: space-between;
+
+    input[type="number"] {
+      padding: 0 .2rem;
+    }
+
+    .spinnerUp {
+      position: relative;
+      right: 0;
+      width: 20%;
+      height: 100%;
+      border: solid 2px rgba(128, 128, 128, 0.5);
+      border-radius: 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background: rgb(190, 190, 190);
+      color: white;
+
+      &::before {
+        content: '+';
+        position: absolute;
+      }
+    }
+    
+    .spinnerDown {
+      position: relative;
+      left: 0;
+      width: 20%;
+      height: 100%;
+      border: solid 2px rgba(128, 128, 128, 0.5);
+      border-radius: 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      background: rgb(190, 190, 190);
+      color: white;
+
+      &::before {
+        content: '-';
+        position: absolute;
+      }
+    }
+  }
+
+  .registItem {
+    div:nth-child(3) { //新規個数
+      display: flex;
+      justify-content: space-between;
+    }
+  }
 
   table {
     border-collapse: collapse;
@@ -8,6 +62,22 @@
       & > td {
         & > input[name="status_flag"] {
           display: none;
+        }
+      }
+
+      & > td:nth-child(3) { //個数フォーム
+        display: flex;
+        justify-content: center;
+
+        .spinnerWrapper {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+
+          & > input {
+            width: 60%;
+            text-align: center;
+          }
         }
       }
     }

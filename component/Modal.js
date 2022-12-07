@@ -4,7 +4,6 @@ import { ParentContext } from './Header';
 
 export default function Modal() {
   const value = useContext(ParentContext);
-
   const modalBody = useRef(null);
   const modalFooter = useRef(null);
 

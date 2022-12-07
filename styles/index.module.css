@@ -1,8 +1,68 @@
+.container .spinnerWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.container .spinnerWrapper input[type=number] {
+  padding: 0 0.2rem;
+}
+.container .spinnerWrapper .spinnerUp {
+  position: relative;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  border: solid 2px rgba(128, 128, 128, 0.5);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgb(190, 190, 190);
+  color: white;
+}
+.container .spinnerWrapper .spinnerUp::before {
+  content: "+";
+  position: absolute;
+}
+.container .spinnerWrapper .spinnerDown {
+  position: relative;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  border: solid 2px rgba(128, 128, 128, 0.5);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgb(190, 190, 190);
+  color: white;
+}
+.container .spinnerWrapper .spinnerDown::before {
+  content: "-";
+  position: absolute;
+}
+.container .registItem div:nth-child(3) {
+  display: flex;
+  justify-content: space-between;
+}
 .container table {
   border-collapse: collapse;
 }
 .container table tr > td > input[name=status_flag] {
   display: none;
+}
+.container table tr > td:nth-child(3) {
+  display: flex;
+  justify-content: center;
+}
+.container table tr > td:nth-child(3) .spinnerWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.container table tr > td:nth-child(3) .spinnerWrapper > input {
+  width: 60%;
+  text-align: center;
 }
 .container table th, .container table td {
   border: solid 1px black;

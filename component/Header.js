@@ -33,7 +33,6 @@ export default function Header(props) {
   function checkAcountDelete() {}
 
   useEffect(()=> {
-    // console.log(modalFlag.current);
   })
 
   return(
