@@ -1,19 +1,17 @@
 import { Link as Scroll } from 'react-scroll';
-import Link from 'next/link';
 import Image from 'next/image';
 import headerStyles from '../styles/header.module.css';
 import React, { useEffect, useRef, createContext } from 'react';
 export const ParentContext = createContext();
-import { Modal } from './index';
+import { Modal, Nav } from './index';
 
-export default function Header(props) {
+export default function Header() {
   const modalFlag = useRef(null);
   const Overlay = useRef(null);
   const modalRef = useRef(null);
   const modalBody = useRef(null);
   const modalFooter = useRef(null);
   const yesBtn = useRef(null);
-  const noBtn = useRef(null);
 
   const value = {
     modalFlag: modalFlag,
@@ -21,7 +19,9 @@ export default function Header(props) {
     modalRef: modalRef,
     modalBody: modalBody,
     modalFooter: modalFooter,
-    yesBtn: yesBtn
+    yesBtn: yesBtn,
+    checkSignOut: checkSignOut,
+    checkAcountDelete: checkAcountDelete
   }
 
   function checkSignOut() {
@@ -61,20 +61,15 @@ export default function Header(props) {
     <>
       <ParentContext.Provider value={value}>
         <Modal />
-      </ParentContext.Provider>
-      <header className={headerStyles.header}>
-        <div className={headerStyles.headerLogoWrapper}>
-          <Scroll to="to" smooth={true} duration={600}>
-            <Image src="/headerLogo.svg" width={40} height={30} alt="topへ戻る" title="topへ戻る" priority/>
-          </Scroll>
-        </div>
-        <div className={headerStyles.signArea} ref={props.signArea}>
-          <div className={headerStyles.signAreaWrapper}>
-            <p onClick={checkSignOut} className={headerStyles.signOutBtn}>ログアウト</p>
-            <p onClick={checkAcountDelete} className={headerStyles.acountDeleteBtn}>退会</p>
+        <header className={headerStyles.header}>
+          <div className={headerStyles.headerLogoWrapper}>
+            <Scroll to="to" smooth={true} duration={600}>
+              <Image src="/headerLogo.svg" width={40} height={30} alt="topへ戻る" title="topへ戻る" priority/>
+            </Scroll>
           </div>
-        </div>
-      </header>
+          <Nav />
+        </header>
+      </ParentContext.Provider>
     </>
   )
 }
