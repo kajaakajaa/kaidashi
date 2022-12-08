@@ -10,16 +10,25 @@ export default function Header(props) {
   const modalFlag = useRef(null);
   const Overlay = useRef(null);
   const modalRef = useRef(null);
+  const modalBody = useRef(null);
+  const modalFooter = useRef(null);
+  const yesBtn = useRef(null);
+  const noBtn = useRef(null);
 
   const value = {
     modalFlag: modalFlag,
     Overlay: Overlay,
-    modalRef: modalRef
+    modalRef: modalRef,
+    modalBody: modalBody,
+    modalFooter: modalFooter,
+    yesBtn: yesBtn
   }
 
   function checkSignOut() {
+    yesBtn.current.id = 'check_sign_out';
     modalFlag.current.checked = true;
     Overlay.current.style.zIndex = 2;
+    modalBody.current.innerHTML = 'ログアウトしても宜しいですか？';
     modalRef.current.animate({
       transform: ['translateY(-50px)', 'translateY(0px)'],
       visibility: ['hidden', 'visible'],
@@ -30,7 +39,20 @@ export default function Header(props) {
     });
   }
 
-  function checkAcountDelete() {}
+  function checkAcountDelete() {
+    yesBtn.current.id = 'delete_acount';
+    modalFlag.current.checked = true;
+    Overlay.current.style.zIndex = 2;
+    modalBody.current.innerHTML = 'このアカウントを削除致しますか？';
+    modalRef.current.animate({
+      transform: ['translateY(-50px)', 'translateY(0px)'],
+      visibility: ['hidden', 'visible'],
+      opacity: [0, 1]
+    },{
+      fill: 'forwards',
+      duration: 150
+    });
+  }
 
   useEffect(()=> {
   })
