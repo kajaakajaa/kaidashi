@@ -62,15 +62,17 @@ export default function Header(props) {
       <ParentContext.Provider value={value}>
         <Modal />
       </ParentContext.Provider>
-      <header>
+      <header className={headerStyles.header}>
         <div className={headerStyles.headerLogoWrapper}>
           <Scroll to="to" smooth={true} duration={600}>
-            <Image src="/headerLogo.png" width={40} height={30} alt="topへ戻る" title="topへ戻る" priority/>
+            <Image src="/headerLogo.svg" width={40} height={30} alt="topへ戻る" title="topへ戻る" priority/>
           </Scroll>
         </div>
-        <div className={headerStyles.signAreaWrapper} ref={props.signArea}>
-          <p onClick={checkSignOut} className={headerStyles.signOutBtn}>ログアウト</p>
-          <p onClick={checkAcountDelete} className={headerStyles.acountDeleteBtn}>退会</p>
+        <div className={headerStyles.signArea} ref={props.signArea}>
+          <div className={headerStyles.signAreaWrapper}>
+            <p onClick={checkSignOut} className={headerStyles.signOutBtn}>ログアウト</p>
+            <p onClick={checkAcountDelete} className={headerStyles.acountDeleteBtn}>退会</p>
+          </div>
         </div>
       </header>
     </>

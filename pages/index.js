@@ -34,7 +34,7 @@ export default function Index({data}) {
   function signAreaShow() {
     const signAreaWrapper = signArea.current;
     Object.assign(signAreaWrapper.style, {
-      display: 'block'
+      display: 'flex'
     });
   }
   
@@ -90,13 +90,15 @@ export default function Index({data}) {
   }
 
   function setListItem() {
-    Items().forEach((item, index)=> {
+    //ログアウト・退会の表示
+    signAreaShow();
+
+    Items().forEach((item, index)=> { //Items() → データ数(レコード数)を取得
       updateItemNumberRefs.current[index].current.value = item['個数'];
     });
   }
 
   useEffect(()=> {
-    signAreaShow();
     setListItem();
     //各データの削除ボタンが機能しているか確認
     Items().map((e, i)=> {
@@ -116,23 +118,21 @@ export default function Index({data}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header signArea={signArea}/>
-      <main>
+      <main className={indexStyles.main}>
         <div className={indexStyles.container} id="top">
           <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault}}>
             <div>
-              <label htmlFor="item_name">品名</label>
-              <input type="text" name="item_name" id="item_name" />
-            </div>
-            <div>
-              <label htmlFor="price">価格</label>
-              <input type="number" min="0" name="price" id="price" />
-            </div>
-            <div>
-              <label htmlFor="regist_item_number">個数</label>
-              <div className={indexStyles.spinnerWrapper}>
-                <span className={indexStyles.spinnerDown}></span>
+              <div>
+                <label htmlFor="item_name">品名</label>
+                <input type="text" name="item_name" id="item_name" />
+              </div>
+              <div>
+                <label htmlFor="price">価格</label>
+                <input type="number" min="0" name="price" id="price" />
+              </div>
+              <div>
+                <label htmlFor="regist_item_number">個数</label>
                 <input type="number" min="0" name="regist_item_number" id="regist_item_number" />
-                <span className={indexStyles.spinnerUp}></span>
               </div>
             </div>
             <div><input type="submit" value="新規商品登録" /></div>
