@@ -1,89 +1,139 @@
-.container {
-  .spinnerWrapper {
-    display: flex;
-    justify-content: space-between;
+.main {
+  background: #FFD903;
 
-    input[type="number"] {
-      padding: 0 .2rem;
+  .container {
+    width: 60%;
+    margin: 100px auto;
+    margin-bottom: 90px;
+    padding: 5% 0;
+    @media(max-width: 991px) {
+      width: 75%;
     }
-
-    .spinnerUp {
-      position: relative;
-      right: 0;
-      width: 20%;
-      height: 100%;
-      border: solid 2px rgba(128, 128, 128, 0.5);
-      border-radius: 2px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      background: rgb(190, 190, 190);
-      color: white;
-
-      &::before {
-        content: '+';
-        position: absolute;
-      }
-    }
-    
-    .spinnerDown {
-      position: relative;
-      left: 0;
-      width: 20%;
-      height: 100%;
-      border: solid 2px rgba(128, 128, 128, 0.5);
-      border-radius: 2px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      background: rgb(190, 190, 190);
-      color: white;
-
-      &::before {
-        content: '-';
-        position: absolute;
-      }
-    }
-  }
-
-  .registItem {
-    div:nth-child(3) { //新規個数
+  
+    .spinnerWrapper {
       display: flex;
       justify-content: space-between;
-    }
-  }
-
-  table {
-    border-collapse: collapse;
-
-    tr {
-      & > td {
-        & > input[name="status_flag"] {
-          display: none;
-        }
+  
+      input[type="number"] {
+        padding: 0 .2rem;
       }
-
-      & > td:nth-child(3) { //個数フォーム
+  
+      .spinnerUp {
+        position: relative;
+        right: 0;
+        width: 20%;
+        height: 100%;
+        border: solid 2px rgba(128, 128, 128, 0.5);
+        border-radius: 2px;
         display: flex;
         justify-content: center;
-
-        .spinnerWrapper {
+        align-items: center;
+        cursor: pointer;
+        background: rgb(190, 190, 190);
+        color: white;
+  
+        &::before {
+          content: '+';
+          position: absolute;
+        }
+      }
+      
+      .spinnerDown {
+        position: relative;
+        left: 0;
+        width: 20%;
+        height: 100%;
+        border: solid 2px rgba(128, 128, 128, 0.5);
+        border-radius: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background: rgb(190, 190, 190);
+        color: white;
+  
+        &::before {
+          content: '-';
+          position: absolute;
+        }
+      }
+    }
+  
+    .registItem {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 10%;
+  
+      & > div:first-child {
+        display: flex;
+        justify-content: space-between;
+        gap: 3%;
+  
+        & > div {
           width: 100%;
-          display: flex;
-          justify-content: center;
+  
+          label {
+            display: block;
+            margin-bottom: .5rem;
+          }
 
-          & > input {
-            width: 60%;
-            text-align: center;
+          span {
+            width: 15%;
+            height: 2.5rem;
+          }
+
+          input:not([name="regist_item_number"]) {
+            border-radius: 5px;
+          }
+  
+          input {
+            outline: none;
+            width: 100%;
+            height: 2.5rem;
+            padding: 2px .5rem;
+            border: solid 1px rgb(138, 138, 138);
+            border-radius: 5px;
           }
         }
       }
-    }
 
-    th, td {
-      border: solid 1px black;
+      & > div:last-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  
+    table {
+      border-collapse: collapse;
+  
+      tr {
+        & > td {
+          & > input[name="status_flag"] {
+            display: none;
+          }
+        }
+  
+        & > td:nth-child(3) { //個数フォーム
+          display: flex;
+          justify-content: center;
+  
+          .spinnerWrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+  
+            & > input {
+              width: 60%;
+              text-align: center;
+            }
+          }
+        }
+      }
+  
+      th, td {
+        border: solid 1px black;
+      }
     }
   }
 }

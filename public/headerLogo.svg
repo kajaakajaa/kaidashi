@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="189.149" height="91.363" viewBox="0 0 189.149 91.363">
+  <g id="グループ_66" data-name="グループ 66" transform="translate(0 0.031)">
+    <text id="Memo" transform="translate(65.03 86.9)" fill="#231815" font-size="15" font-family="Helvetica"><tspan x="0" y="0">Memo</tspan></text>
+    <g id="グループ_65" data-name="グループ 65">
+      <g id="グループ_64" data-name="グループ 64">
+        <g id="グループ_63" data-name="グループ 63">
+          <g id="グループ_62" data-name="グループ 62">
+            <path id="パス_7" data-name="パス 7" d="M76.94,29.12H116.8l-4.71,13.19H82.56Z" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <line id="線_16" data-name="線 16" x2="5.68" y2="13.19" transform="translate(83.22 29.12)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <line id="線_17" data-name="線 17" x2="5.68" y2="13.19" transform="translate(88.9 29.12)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <line id="線_18" data-name="線 18" x2="5.68" y2="13.19" transform="translate(94.03 29.12)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <line id="線_19" data-name="線 19" x2="5.68" y2="13.19" transform="translate(100.03 29.12)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <line id="線_20" data-name="線 20" x2="5.68" y2="13.19" transform="translate(105.71 29.12)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <path id="パス_8" data-name="パス 8" d="M87.97,28.96l-4.75,13.5L79.28,53.91" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <line id="線_21" data-name="線 21" x1="4.75" y2="13.5" transform="translate(88.62 28.96)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <line id="線_22" data-name="線 22" x1="4.75" y2="13.5" transform="translate(94.93 28.96)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <line id="線_23" data-name="線 23" x1="4.75" y2="13.5" transform="translate(100.49 28.96)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <path id="パス_9" data-name="パス 9" d="M109.52,42.31l8.35-21.21,2.78-2.21" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+            <path id="パス_10" data-name="パス 10" d="M116.8,29.12l3.27-8.02,1.83-1.33" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+          </g>
+          <ellipse id="楕円形_1" data-name="楕円形 1" cx="3" cy="2.76" rx="3" ry="2.76" transform="translate(73.68 52.76)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+          <ellipse id="楕円形_2" data-name="楕円形 2" cx="3" cy="2.76" rx="3" ry="2.76" transform="translate(102.71 52.76)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+          <ellipse id="楕円形_3" data-name="楕円形 3" cx="1.5" cy="1.38" rx="1.5" ry="1.38" transform="translate(104.21 54.14)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+          <ellipse id="楕円形_4" data-name="楕円形 4" cx="1.5" cy="1.38" rx="1.5" ry="1.38" transform="translate(75.18 54.14)" fill="#fff" stroke="#231815" stroke-miterlimit="10" stroke-width="1"/>
+        </g>
+        <text id="買" transform="matrix(0.929, -0.37, 0.37, 0.929, 13.81, 63.85)" fill="#231815" stroke="#231815" stroke-miterlimit="10" stroke-width="0.25" font-size="39" font-family="HiraginoSans-W3, Hiragino Sans"><tspan x="0" y="0">買</tspan></text>
+        <text id="出" transform="matrix(0.951, 0.309, -0.309, 0.951, 141.24, 50.86)" fill="#231815" stroke="#231815" stroke-miterlimit="10" stroke-width="0.25" font-size="39" font-family="HiraginoSans-W3, Hiragino Sans"><tspan x="0" y="0">出</tspan></text>
+        <path id="パス_11" data-name="パス 11" d="M.04,14.09A269.288,269.288,0,0,1,73.66.48,302.22,302.22,0,0,1,186.89,16.54" fill="#f7f8f8" stroke="#231815" stroke-miterlimit="10" stroke-width="0.25"/>
+        <path id="パス_12" data-name="パス 12" d="M2.77,90.72a200.9,200.9,0,0,1,71.7-19.73A214.264,214.264,0,0,1,184.18,91.22" fill="#f7f8f8" stroke="#231815" stroke-miterlimit="10" stroke-width="0.25"/>
+      </g>
+      <text id="Memo-2" data-name="Memo" transform="translate(66.47 86.92)" fill="#fff" stroke="#595757" stroke-miterlimit="10" stroke-width="1" font-size="15" font-family="Helvetica"><tspan x="0" y="0">Memo</tspan></text>
+    </g>
+  </g>
+</svg>

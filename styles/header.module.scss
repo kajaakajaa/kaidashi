@@ -1,23 +1,27 @@
-header {
+.header {
+  height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: #FFD903;
+  border-bottom: solid 1px rgb(138, 138, 138);
+
   .headerLogoWrapper {
-    a {
-      img {}
-    }
-  }
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  .signAreaWrapper {
-    display: none;
+    & > a {
+      width: 130px;
 
-    & > p {
-      text-decoration: underline;
-      display: inline-block;
-      cursor: pointer;
-    }
-
-    .signOutBtn {}
-
-    .acountDeleteBtn {
-      margin-left: 1rem;
+      img {
+        width: 100%;
+        height: auto;
+      }
     }
   }
 }

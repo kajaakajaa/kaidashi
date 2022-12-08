@@ -1,10 +1,8 @@
-// import Head from 'next/head'
-// import Image from 'next/image'
-// import styles from '../styles/Home.module.css'
 import Head from 'next/head';
 import indexStyles from '../styles/index.module.css';
 import { Header } from '../component/index';
-import React, { useEffect, useRef, createRef } from 'react';
+import React, { useEffect, useRef, createRef, createContext } from 'react';
+export const HeaderContext = createContext();
 
 // export async function getServerSideProps() {
   // let query = {};
@@ -29,14 +27,17 @@ export default function Index({data}) {
   for(let i = 0; i < Items().length; i++) {
     itemDeleteBtnRefs.current[i] = createRef();
   }
+  const value = {
+    signArea: signArea
+  }
 
   //ログアウト・退会エリアの表示
-  function signAreaShow() {
-    const signAreaWrapper = signArea.current;
-    Object.assign(signAreaWrapper.style, {
-      display: 'block'
-    });
-  }
+  // function signAreaShow() {
+  //   const signAreaWrapper = signArea.current;
+  //   Object.assign(signAreaWrapper.style, {
+  //     display: 'flex'
+  //   });
+  // }
   
    //※疑似データ
   function Items() {
@@ -90,13 +91,15 @@ export default function Index({data}) {
   }
 
   function setListItem() {
-    Items().forEach((item, index)=> {
+    //ログアウト・退会の表示
+    // signAreaShow();
+
+    Items().forEach((item, index)=> { //Items() → データ数(レコード数)を取得
       updateItemNumberRefs.current[index].current.value = item['個数'];
     });
   }
 
   useEffect(()=> {
-    signAreaShow();
     setListItem();
     //各データの削除ボタンが機能しているか確認
     Items().map((e, i)=> {
@@ -115,24 +118,24 @@ export default function Index({data}) {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header signArea={signArea}/>
-      <main>
+      <HeaderContext.Provider value={value}>
+        <Header signArea={signArea}/>
+      </HeaderContext.Provider>
+      <main className={indexStyles.main}>
         <div className={indexStyles.container} id="top">
           <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault}}>
             <div>
-              <label htmlFor="item_name">品名</label>
-              <input type="text" name="item_name" id="item_name" />
-            </div>
-            <div>
-              <label htmlFor="price">価格</label>
-              <input type="number" min="0" name="price" id="price" />
-            </div>
-            <div>
-              <label htmlFor="regist_item_number">個数</label>
-              <div className={indexStyles.spinnerWrapper}>
-                <span className={indexStyles.spinnerDown}></span>
+              <div>
+                <label htmlFor="item_name">品名</label>
+                <input type="text" name="item_name" id="item_name" />
+              </div>
+              <div>
+                <label htmlFor="price">価格</label>
+                <input type="number" min="0" name="price" id="price" />
+              </div>
+              <div>
+                <label htmlFor="regist_item_number">個数</label>
                 <input type="number" min="0" name="regist_item_number" id="regist_item_number" />
-                <span className={indexStyles.spinnerUp}></span>
               </div>
             </div>
             <div><input type="submit" value="新規商品登録" /></div>
