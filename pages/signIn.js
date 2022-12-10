@@ -1,9 +1,17 @@
 import Head from 'next/head';
-import { Header } from '../component/index';
 import signStyles from '../styles/sign.module.css';
+import { Header } from '../component/index';
 import Link from 'next/link';
+import React, { useRef, createContext } from 'react';
+export const SignInHeaderContext = createContext();
 
 export default function SignIn() {
+  const signArea = useRef(null);
+
+  const value = {
+    signArea: signArea
+  }
+
   return(
     <>
       <Head>
@@ -12,7 +20,9 @@ export default function SignIn() {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <SignInHeaderContext.Provider value={value}>
+        <Header />
+      </SignInHeaderContext.Provider>
       <main>
         <div className={signStyles.container} id="top">
           <div className={signStyles.signInWrapper}>
