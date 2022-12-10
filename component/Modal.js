@@ -1,23 +1,33 @@
 import modalStyles from '../styles/modal.module.css';
 import React, { useRef, useContext, useEffect } from 'react';
-import { ParentContext } from './Header';
+import { HeaderContext } from './Header';
 
 export default function Modal() {
-  const value = useContext(ParentContext);
+  const value = useContext(HeaderContext);
 
   function overLayClose() {
-    value.modalRef.current.animate({
-      transform: ['translateY(0px)', 'translateY(-50px)'],
-      visibility: ['visible', 'hidden'],
-      opacity: [1, 0]
-    },{
-      fill: 'forwards',
-      duration: 150
-    });
-    value.modalFlag.current.checked = false;
-    value.Overlay.current.style.zIndex = 'auto';
-    value.modalBody.current.innerHTML = '';
-    value.yesBtn.current.id = '';
+    if(value.Overlay.current.id == 'check_sign_out_overlay' || value.Overlay.current.id == 'delete_acount_overlay') {
+      value.modalRef.current.animate({
+        transform: ['translateY(0px)', 'translateY(-50px)'],
+        visibility: ['visible', 'hidden'],
+        opacity: [1, 0]
+      },{
+        fill: 'forwards',
+        duration: 150
+      });
+      value.modalFlag.current.checked = false;
+      value.Overlay.current.style.zIndex = 'auto';
+      value.Overlay.current.id = '';
+      value.modalBody.current.innerHTML = '';
+      value.hamburgerOpenflag.current.checked = false;
+      value.yesBtn.current.id = '';
+    }
+    else if(value.Overlay.current.id == 'hamburger_open_overlay') {
+      value.modalFlag.current.checked = false;
+      value.Overlay.current.style.zIndex = 'auto';
+      value.Overlay.current.id = '';
+      value.hamburgerOpenflag.current.checked = false;
+    }
   }
 
   function YesBtn(e, status) {

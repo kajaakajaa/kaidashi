@@ -22,3 +22,142 @@
   width: 100%;
   height: auto;
 }
+.header > input {
+  display: none;
+}
+.header > input:checked ~ .hamburger {
+  background: black;
+}
+.header > input:checked ~ .hamburger > span {
+  background: rgba(0, 0, 0, 0);
+}
+.header > input:checked ~ .hamburger > span::before {
+  background: white;
+  bottom: 0;
+  transform: rotate(225deg);
+}
+.header > input:checked ~ .hamburger > span::after {
+  background: white;
+  top: 0;
+  transform: rotate(-225deg);
+}
+.header > input:checked ~ .signArea {
+  right: 0;
+}
+.header .hamburger {
+  visibility: hidden;
+}
+@media (max-width: 767px) {
+  .header .hamburger {
+    visibility: visible;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 1.2rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: grey;
+    cursor: pointer;
+  }
+  .header .hamburger > span {
+    width: 30px;
+    height: 2px;
+    border-radius: 5px;
+    background: #FFD903;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .header .hamburger > span::before {
+    content: "";
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    background: inherit;
+    position: absolute;
+    bottom: 8px;
+    transition: all 0.3s;
+  }
+  .header .hamburger > span::after {
+    content: "";
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    background: inherit;
+    position: absolute;
+    top: 8px;
+    transition: all 0.3s;
+  }
+}
+.header .signArea {
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: flex-end;
+  align-items: center;
+  position: absolute;
+  top: 0;
+}
+@media (max-width: 767px) {
+  .header .signArea {
+    width: 40vw;
+    height: 100vh;
+    right: -40vw;
+    background: rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+  }
+}
+.header .signArea .signAreaWrapper {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 767px) {
+  .header .signArea .signAreaWrapper {
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 4.5rem 2rem 2rem;
+  }
+}
+@media (max-width: 767px) {
+  .header .signArea .signAreaWrapper > div {
+    width: 100%;
+    padding: 1rem 0;
+    margin: 0;
+    color: white;
+    border-bottom: solid 0.1px white;
+  }
+}
+.header .signArea .signAreaWrapper > div > a {
+  text-decoration: underline;
+  cursor: pointer;
+  color: blue;
+  font-size: 1rem;
+  transition: all 0.2s;
+  text-decoration: underline;
+}
+@media (max-width: 767px) {
+  .header .signArea .signAreaWrapper > div > a {
+    text-decoration: none;
+    color: white;
+  }
+}
+@media (max-width: 575px) {
+  .header .signArea .signAreaWrapper > div > a {
+    font-size: 0.9rem;
+  }
+}
+.header .signArea .signAreaWrapper > div > a:hover {
+  color: rgb(0, 0, 100);
+}
+@media (max-width: 767px) {
+  .header .signArea .signAreaWrapper > div > a:hover {
+    color: black;
+  }
+}

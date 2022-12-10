@@ -2,7 +2,7 @@ import Head from 'next/head';
 import indexStyles from '../styles/index.module.css';
 import { Header } from '../component/index';
 import React, { useEffect, useRef, createRef, createContext } from 'react';
-export const HeaderContext = createContext();
+export const IndexHeaderContext = createContext();
 
 // export async function getServerSideProps() {
   // let query = {};
@@ -20,24 +20,35 @@ export default function Index({data}) {
   const signArea = useRef(null);
   const tbody = useRef(null);
   const updateItemNumberRefs = useRef([]);
+  const hamburgerBtn = useRef(null);
+
   for(let i = 0; i < Items().length; i++) {
     updateItemNumberRefs.current[i] = createRef(); //updateItemNumberRefs の配列の中に個々の ref が入っていて、参照する時は ' updateItemNumberRefs.current[i]' で呼び出す。
   }
+
   const itemDeleteBtnRefs = useRef([]);
   for(let i = 0; i < Items().length; i++) {
     itemDeleteBtnRefs.current[i] = createRef();
   }
+
   const value = {
-    signArea: signArea
+    signArea: signArea,
+    hamburgerClose: hamburgerClose,
+    hamburgerBtn: hamburgerBtn
   }
 
   //ログアウト・退会エリアの表示
-  // function signAreaShow() {
-  //   const signAreaWrapper = signArea.current;
-  //   Object.assign(signAreaWrapper.style, {
-  //     display: 'flex'
-  //   });
-  // }
+  function signAreaShow() {
+    const signAreaStyle = signArea.current;
+    Object.assign(signAreaStyle.style, {
+      display: 'flex'
+    });
+    
+    // const hamburgerBtn = hamburgerBtn.current;
+    Object.assign(hamburgerBtn.current.style, {
+      display: 'flex'
+    });
+  }
   
    //※疑似データ
   function Items() {
@@ -90,9 +101,27 @@ export default function Index({data}) {
     }
   }
 
+  function hamburgerClose(e) {
+    const signAreaWrapper = e.target.children[0];
+    signAreaWrapper.animate({
+      right: [0, '-40vw']
+    },{
+      fill: 'forwards',
+      duration: 150
+    });
+
+    e.target.animate({
+      background: ['rgb(0 0 0 / 20%)', 'rgb(0, 0, 0, 0)'],
+      visibility: ['visible', 'hidden']
+    },{
+      fill: 'forwards',
+      duration: 200
+    });
+  }
+
   function setListItem() {
     //ログアウト・退会の表示
-    // signAreaShow();
+    signAreaShow();
 
     Items().forEach((item, index)=> { //Items() → データ数(レコード数)を取得
       updateItemNumberRefs.current[index].current.value = item['個数'];
@@ -101,12 +130,7 @@ export default function Index({data}) {
 
   useEffect(()=> {
     setListItem();
-    //各データの削除ボタンが機能しているか確認
-    Items().map((e, i)=> {
-      itemDeleteBtnRefs.current[i].current.addEventListener('click', (e)=> {
-        console.log(e.target.id);
-      });
-    });
+    
     return()=> {}
   });
 
@@ -118,9 +142,9 @@ export default function Index({data}) {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HeaderContext.Provider value={value}>
-        <Header signArea={signArea}/>
-      </HeaderContext.Provider>
+      <IndexHeaderContext.Provider value={value}>
+        <Header />
+      </IndexHeaderContext.Provider>
       <main className={indexStyles.main}>
         <div className={indexStyles.container} id="top">
           <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault}}>
