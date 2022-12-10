@@ -118,6 +118,10 @@
       background: rgba(0, 0, 0, 0.5);
       transition: all .3s;
     }
+    @media(max-width: 575px) {
+      width: 100vw;
+      right: -100vw;
+    }
   
     .signAreaWrapper {
       width: 20%;

@@ -108,6 +108,12 @@
     transition: all 0.3s;
   }
 }
+@media (max-width: 575px) {
+  .header .signArea {
+    width: 100vw;
+    right: -100vw;
+  }
+}
 .header .signArea .signAreaWrapper {
   width: 20%;
   height: 100%;
