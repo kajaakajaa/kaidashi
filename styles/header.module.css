@@ -1,4 +1,5 @@
 .header {
+  grid-row: 1;
   height: 100px;
   position: fixed;
   top: 0;

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import indexStyles from '../styles/index.module.css';
-import { Header } from '../component/index';
+import { Header, Footer } from '../component/index';
 import React, { useEffect, useRef, createRef, createContext } from 'react';
 export const IndexHeaderContext = createContext();
 
@@ -142,39 +142,41 @@ export default function Index({data}) {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <IndexHeaderContext.Provider value={value}>
-        <Header />
-      </IndexHeaderContext.Provider>
-      <main className={indexStyles.main}>
-        <div className={indexStyles.container} id="top">
-          <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault}}>
-            <div>
+      <div className={indexStyles.container}>
+        <IndexHeaderContext.Provider value={value}>
+          <Header />
+        </IndexHeaderContext.Provider>
+        <main className={indexStyles.main}>
+          <div className={indexStyles.mainWrapper} id="top">
+            <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault}}>
               <div>
-                <label htmlFor="item_name">品名</label>
-                <input type="text" name="item_name" id="item_name" />
+                <div>
+                  <label htmlFor="item_name">品名</label>
+                  <input type="text" name="item_name" id="item_name" />
+                </div>
+                <div>
+                  <label htmlFor="price">価格</label>
+                  <input type="number" min="0" name="price" id="price" />
+                </div>
+                <div>
+                  <label htmlFor="regist_item_number">個数</label>
+                  <input type="number" min="0" name="regist_item_number" id="regist_item_number" />
+                </div>
               </div>
-              <div>
-                <label htmlFor="price">価格</label>
-                <input type="number" min="0" name="price" id="price" />
-              </div>
-              <div>
-                <label htmlFor="regist_item_number">個数</label>
-                <input type="number" min="0" name="regist_item_number" id="regist_item_number" />
-              </div>
-            </div>
-            <div><input type="submit" value="新規商品登録" /></div>
-          </form>
-          <form onSubmit={(e)=> {e.preventDefault}} id="item_update">
-            <table>
-              <tbody ref={tbody}>
-                {itemList} {/*動的なレイアウトは上記で定義*/}
-              </tbody>
-            </table>
-          </form>
-          <input type="submit" form="item_update" value="更新" />
-        </div>
-      </main>
-      {/* <Footer /> */}
+              <div><input type="submit" value="新規商品登録" /></div>
+            </form>
+            <form onSubmit={(e)=> {e.preventDefault}} id="item_update">
+              <table>
+                <tbody ref={tbody}>
+                  {itemList} {/*動的なレイアウトは上記で定義*/}
+                </tbody>
+              </table>
+            </form>
+            <input type="submit" form="item_update" value="更新" />
+          </div>
+        </main>
+        <Footer />
+      </div>
     </>
   )
 }

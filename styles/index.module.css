@@ -1,25 +1,32 @@
-.main {
-  background: #FFD903;
+.container {
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+  min-height: 100vh;
 }
-.main .container {
+.container .main {
+  grid-row: 2;
+  background: #FFD903;
+  height: 1500px;
+}
+.container .main .mainWrapper {
   width: 60%;
   margin: 100px auto;
   margin-bottom: 90px;
   padding: 5% 0;
 }
 @media (max-width: 991px) {
-  .main .container {
+  .container .main .mainWrapper {
     width: 75%;
   }
 }
-.main .container .spinnerWrapper {
+.container .main .mainWrapper .spinnerWrapper {
   display: flex;
   justify-content: space-between;
 }
-.main .container .spinnerWrapper input[type=number] {
+.container .main .mainWrapper .spinnerWrapper input[type=number] {
   padding: 0 0.2rem;
 }
-.main .container .spinnerWrapper .spinnerUp {
+.container .main .mainWrapper .spinnerWrapper .spinnerUp {
   position: relative;
   right: 0;
   width: 20%;
@@ -33,11 +40,11 @@
   background: rgb(190, 190, 190);
   color: white;
 }
-.main .container .spinnerWrapper .spinnerUp::before {
+.container .main .mainWrapper .spinnerWrapper .spinnerUp::before {
   content: "+";
   position: absolute;
 }
-.main .container .spinnerWrapper .spinnerDown {
+.container .main .mainWrapper .spinnerWrapper .spinnerDown {
   position: relative;
   left: 0;
   width: 20%;
@@ -51,35 +58,35 @@
   background: rgb(190, 190, 190);
   color: white;
 }
-.main .container .spinnerWrapper .spinnerDown::before {
+.container .main .mainWrapper .spinnerWrapper .spinnerDown::before {
   content: "-";
   position: absolute;
 }
-.main .container .registItem {
+.container .main .mainWrapper .registItem {
   display: grid;
   grid-template-rows: 1fr 1fr;
   gap: 10%;
 }
-.main .container .registItem > div:first-child {
+.container .main .mainWrapper .registItem > div:first-child {
   display: flex;
   justify-content: space-between;
   gap: 3%;
 }
-.main .container .registItem > div:first-child > div {
+.container .main .mainWrapper .registItem > div:first-child > div {
   width: 100%;
 }
-.main .container .registItem > div:first-child > div label {
+.container .main .mainWrapper .registItem > div:first-child > div label {
   display: block;
   margin-bottom: 0.5rem;
 }
-.main .container .registItem > div:first-child > div span {
+.container .main .mainWrapper .registItem > div:first-child > div span {
   width: 15%;
   height: 2.5rem;
 }
-.main .container .registItem > div:first-child > div input:not([name=regist_item_number]) {
+.container .main .mainWrapper .registItem > div:first-child > div input:not([name=regist_item_number]) {
   border-radius: 5px;
 }
-.main .container .registItem > div:first-child > div input {
+.container .main .mainWrapper .registItem > div:first-child > div input {
   outline: none;
   width: 100%;
   height: 2.5rem;
@@ -87,30 +94,30 @@
   border: solid 1px rgb(138, 138, 138);
   border-radius: 5px;
 }
-.main .container .registItem > div:last-child {
+.container .main .mainWrapper .registItem > div:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.main .container table {
+.container .main .mainWrapper table {
   border-collapse: collapse;
 }
-.main .container table tr > td > input[name=status_flag] {
+.container .main .mainWrapper table tr > td > input[name=status_flag] {
   display: none;
 }
-.main .container table tr > td:nth-child(3) {
+.container .main .mainWrapper table tr > td:nth-child(3) {
   display: flex;
   justify-content: center;
 }
-.main .container table tr > td:nth-child(3) .spinnerWrapper {
+.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.main .container table tr > td:nth-child(3) .spinnerWrapper > input {
+.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper > input {
   width: 60%;
   text-align: center;
 }
-.main .container table th, .main .container table td {
+.container .main .mainWrapper table th, .container .main .mainWrapper table td {
   border: solid 1px black;
 }
