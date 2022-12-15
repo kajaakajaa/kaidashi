@@ -88,7 +88,6 @@ export default function Header(props) {
   }
 
   useEffect(()=> {
-    console.log(fromAnyWhereHeader().signArea.current);
   })
 
   return(
