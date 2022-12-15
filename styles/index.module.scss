@@ -7,6 +7,14 @@
     grid-row: 2;
     background: #FFD903;
     height: 1500px;
+
+    .observeTarget {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      visibility: hidden;
+    }
   
     .mainWrapper {
       width: 60%;
@@ -15,55 +23,6 @@
       padding: 5% 0;
       @media(max-width: 991px) {
         width: 75%;
-      }
-    
-      .spinnerWrapper {
-        display: flex;
-        justify-content: space-between;
-    
-        input[type="number"] {
-          padding: 0 .2rem;
-        }
-    
-        .spinnerUp {
-          position: relative;
-          right: 0;
-          width: 20%;
-          height: 100%;
-          border: solid 2px rgba(128, 128, 128, 0.5);
-          border-radius: 2px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
-          background: rgb(190, 190, 190);
-          color: white;
-    
-          &::before {
-            content: '+';
-            position: absolute;
-          }
-        }
-        
-        .spinnerDown {
-          position: relative;
-          left: 0;
-          width: 20%;
-          height: 100%;
-          border: solid 2px rgba(128, 128, 128, 0.5);
-          border-radius: 2px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          cursor: pointer;
-          background: rgb(190, 190, 190);
-          color: white;
-    
-          &::before {
-            content: '-';
-            position: absolute;
-          }
-        }
       }
     
       .registItem {
@@ -75,6 +34,9 @@
           display: flex;
           justify-content: space-between;
           gap: 3%;
+          @media(max-width: 767px) {
+            display: none;
+          }
     
           & > div {
             width: 100%;
@@ -98,7 +60,7 @@
               width: 100%;
               height: 2.5rem;
               padding: 2px .5rem;
-              border: solid 1px rgb(138, 138, 138);
+              border: solid 1.5px rgb(196 196 196);
               border-radius: 5px;
             }
           }
@@ -108,11 +70,29 @@
           display: flex;
           justify-content: center;
           align-items: center;
+
+          .registItemBtn { //新規商品登録ボタン
+            padding: .5rem 1rem;
+            border-radius: 5px;
+            border: solid 1.5px rgb(196 196 196);
+            background: #00187C;
+            color: white;
+            cursor: pointer;
+            @media(max-width: 767px) {
+              width: 100%;
+              padding: 0.8rem 1rem;
+            }
+
+            &:hover {
+              color: rgb(227, 227, 227);
+              background: #00115a;
+            }
+          }
         }
       }
     
       table {
-        border-collapse: collapse;
+        border-collapse: separate;
     
         tr {
           & > td {
@@ -122,9 +102,6 @@
           }
     
           & > td:nth-child(3) { //個数フォーム
-            display: flex;
-            justify-content: center;
-    
             .spinnerWrapper {
               width: 100%;
               display: flex;
@@ -134,12 +111,132 @@
                 width: 60%;
                 text-align: center;
               }
+          
+              input[type="number"] {
+                padding: 0 .2rem;
+              }
+          
+              .spinnerUp {
+                position: relative;
+                right: 0;
+                width: 20%;
+                border: solid 2px rgba(128, 128, 128, 0.5);
+                border-radius: 2px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                background: rgb(190, 190, 190);
+                color: white;
+          
+                &::before {
+                  content: '+';
+                  position: absolute;
+                }
+              }
+              
+              .spinnerDown {
+                position: relative;
+                left: 0;
+                width: 20%;
+                border: solid 2px rgba(128, 128, 128, 0.5);
+                border-radius: 2px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                background: rgb(190, 190, 190);
+                color: white;
+          
+                &::before {
+                  content: '-';
+                  position: absolute;
+                }
+              }
             }
           }
+
+          & > td:nth-child(4) {
+            label {
+              span {
+                padding: 0.3rem;
+                border-radius: 2px;
+                border: solid 0.1px white;
+                cursor: pointer;
+
+                &:hover {
+                  color: rgb(227, 227, 227);
+                }
+              }
+            }
+          }
+
+          & > td:last-child {
+            text-decoration: underline;
+            cursor: pointer;
+            
+            &:hover {
+              color: rgb(227, 227, 227);
+            }
+          }
+
+          td {
+            border: solid 1px black;
+            border-radius: 5px;
+            background: black;
+            color: white;
+            padding: .5rem .8rem;
+          }
+  
+          td:nth-child(2), td:last-child {
+            white-space: nowrap;
+          }
+        }    
+      }
+
+      .updateBtn {
+        position: fixed;
+        bottom: 120px;
+        left: 3rem;
+        padding: .5rem 1.5rem;
+        border-radius: 5px;
+        border: solid 1px grey;
+        background: #9F0000;
+        opacity: .8;
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+          color: rgb(227, 227, 227);
+          background: #840101;
         }
-    
-        th, td {
-          border: solid 1px black;
+      }
+
+      .toTopWrapper {
+        position: fixed;
+        bottom: 100px;
+        right: 3rem;
+        width: 50px;
+        height: 50px;
+        display: none;
+
+        & > a {
+          width: 100%;
+          height: 100%;
+          position: relative;
+          background: black;
+          border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          
+          &::before {
+            content: '\02227';
+            position: absolute;
+            font-size: 1.5rem;
+            color: white;
+          }
         }
       }
     }

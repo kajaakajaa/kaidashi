@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .container {
   display: grid;
   grid-template-rows: 1fr auto 1fr;
@@ -7,6 +8,13 @@
   grid-row: 2;
   background: #FFD903;
   height: 1500px;
+}
+.container .main .observeTarget {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  visibility: hidden;
 }
 .container .main .mainWrapper {
   width: 60%;
@@ -19,49 +27,6 @@
     width: 75%;
   }
 }
-.container .main .mainWrapper .spinnerWrapper {
-  display: flex;
-  justify-content: space-between;
-}
-.container .main .mainWrapper .spinnerWrapper input[type=number] {
-  padding: 0 0.2rem;
-}
-.container .main .mainWrapper .spinnerWrapper .spinnerUp {
-  position: relative;
-  right: 0;
-  width: 20%;
-  height: 100%;
-  border: solid 2px rgba(128, 128, 128, 0.5);
-  border-radius: 2px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  background: rgb(190, 190, 190);
-  color: white;
-}
-.container .main .mainWrapper .spinnerWrapper .spinnerUp::before {
-  content: "+";
-  position: absolute;
-}
-.container .main .mainWrapper .spinnerWrapper .spinnerDown {
-  position: relative;
-  left: 0;
-  width: 20%;
-  height: 100%;
-  border: solid 2px rgba(128, 128, 128, 0.5);
-  border-radius: 2px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  background: rgb(190, 190, 190);
-  color: white;
-}
-.container .main .mainWrapper .spinnerWrapper .spinnerDown::before {
-  content: "-";
-  position: absolute;
-}
 .container .main .mainWrapper .registItem {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -71,6 +36,11 @@
   display: flex;
   justify-content: space-between;
   gap: 3%;
+}
+@media (max-width: 767px) {
+  .container .main .mainWrapper .registItem > div:first-child {
+    display: none;
+  }
 }
 .container .main .mainWrapper .registItem > div:first-child > div {
   width: 100%;
@@ -91,7 +61,7 @@
   width: 100%;
   height: 2.5rem;
   padding: 2px 0.5rem;
-  border: solid 1px rgb(138, 138, 138);
+  border: solid 1.5px rgb(196, 196, 196);
   border-radius: 5px;
 }
 .container .main .mainWrapper .registItem > div:last-child {
@@ -99,15 +69,29 @@
   justify-content: center;
   align-items: center;
 }
+.container .main .mainWrapper .registItem > div:last-child .registItemBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: solid 1.5px rgb(196, 196, 196);
+  background: #00187C;
+  color: white;
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  .container .main .mainWrapper .registItem > div:last-child .registItemBtn {
+    width: 100%;
+    padding: 0.8rem 1rem;
+  }
+}
+.container .main .mainWrapper .registItem > div:last-child .registItemBtn:hover {
+  color: rgb(227, 227, 227);
+  background: #00115a;
+}
 .container .main .mainWrapper table {
-  border-collapse: collapse;
+  border-collapse: separate;
 }
 .container .main .mainWrapper table tr > td > input[name=status_flag] {
   display: none;
-}
-.container .main .mainWrapper table tr > td:nth-child(3) {
-  display: flex;
-  justify-content: center;
 }
 .container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper {
   width: 100%;
@@ -118,6 +102,107 @@
   width: 60%;
   text-align: center;
 }
-.container .main .mainWrapper table th, .container .main .mainWrapper table td {
+.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper input[type=number] {
+  padding: 0 0.2rem;
+}
+.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper .spinnerUp {
+  position: relative;
+  right: 0;
+  width: 20%;
+  border: solid 2px rgba(128, 128, 128, 0.5);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgb(190, 190, 190);
+  color: white;
+}
+.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper .spinnerUp::before {
+  content: "+";
+  position: absolute;
+}
+.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper .spinnerDown {
+  position: relative;
+  left: 0;
+  width: 20%;
+  border: solid 2px rgba(128, 128, 128, 0.5);
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: rgb(190, 190, 190);
+  color: white;
+}
+.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper .spinnerDown::before {
+  content: "-";
+  position: absolute;
+}
+.container .main .mainWrapper table tr > td:nth-child(4) label span {
+  padding: 0.3rem;
+  border-radius: 2px;
+  border: solid 0.1px white;
+  cursor: pointer;
+}
+.container .main .mainWrapper table tr > td:nth-child(4) label span:hover {
+  color: rgb(227, 227, 227);
+}
+.container .main .mainWrapper table tr > td:last-child {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.container .main .mainWrapper table tr > td:last-child:hover {
+  color: rgb(227, 227, 227);
+}
+.container .main .mainWrapper table tr td {
   border: solid 1px black;
+  border-radius: 5px;
+  background: black;
+  color: white;
+  padding: 0.5rem 0.8rem;
+}
+.container .main .mainWrapper table tr td:nth-child(2), .container .main .mainWrapper table tr td:last-child {
+  white-space: nowrap;
+}
+.container .main .mainWrapper .updateBtn {
+  position: fixed;
+  bottom: 120px;
+  left: 3rem;
+  padding: 0.5rem 1.5rem;
+  border-radius: 5px;
+  border: solid 1px grey;
+  background: #9F0000;
+  opacity: 0.8;
+  color: white;
+  cursor: pointer;
+}
+.container .main .mainWrapper .updateBtn:hover {
+  color: rgb(227, 227, 227);
+  background: #840101;
+}
+.container .main .mainWrapper .toTopWrapper {
+  position: fixed;
+  bottom: 100px;
+  right: 3rem;
+  width: 50px;
+  height: 50px;
+  display: none;
+}
+.container .main .mainWrapper .toTopWrapper > a {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: black;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.container .main .mainWrapper .toTopWrapper > a::before {
+  content: "∧";
+  position: absolute;
+  font-size: 1.5rem;
+  color: white;
 }
