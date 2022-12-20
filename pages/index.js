@@ -106,7 +106,7 @@ export default function Index({data}) {
             <input type="checkbox" name="status_flag" id="status_flag" />
             <label htmlFor="status_flag" className={indexStyles.statusFlag}>{statusFlag}</label>
           </td>
-          <td key={index} ref={itemDeleteBtnRefs.current[index]} id={'item_delete' + index}>削除</td>
+          <td key={index} ref={itemDeleteBtnRefs.current[index]} id={'item_delete' + index}><span>削除</span></td>
         </tr>
       )
     }
@@ -169,11 +169,11 @@ export default function Index({data}) {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={indexStyles.container}>
+      <div className={indexStyles.container} id="top">
         <IndexHeaderContext.Provider value={value}>
           <Header />
         </IndexHeaderContext.Provider>
-        <main className={indexStyles.main} id="top">
+        <main className={indexStyles.main}>
           <div className={indexStyles.observeTarget} ref={observeTarget}></div>
           <div className={indexStyles.mainWrapper}>
             <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault()}}>
