@@ -93,11 +93,13 @@ export default function Index({data}) {
         <div key={index} className={indexStyles.itemIndex}>
           <div>{item['品名']}</div>
           <div>{item['価格']} 円</div>
-          <div className={indexStyles.spinnerWrapper}>
-            <span className={indexStyles.spinnerDown} onClick={(e)=> {spinnerUpDown(e, 'Decrease')}}></span>
-            <input type="number" min="0" name="update_item_number" step="1" id={'update_item_number'+ index} key={index} ref={updateItemNumberRefs.current[index]} />
-            <span className={indexStyles.spinnerUp} onClick={(e)=> {spinnerUpDown(e, 'Increase')}} id={index}></span>
-            <span>&nbsp;個</span>
+          <div className={indexStyles.Spinner}>
+            <div className={indexStyles.spinnerWrapper}>
+              <span className={indexStyles.spinnerDown} onClick={(e)=> {spinnerUpDown(e, 'Decrease')}}></span>
+              <input type="number" min="0" name="update_item_number" step="1" id={'update_item_number'+ index} key={index} ref={updateItemNumberRefs.current[index]} />
+              <span className={indexStyles.spinnerUp} onClick={(e)=> {spinnerUpDown(e, 'Increase')}} id={index}></span>
+              <span>&nbsp;個</span>
+            </div>
           </div>
           <div>
             <input type="checkbox" name="status_flag" id="status_flag" />
