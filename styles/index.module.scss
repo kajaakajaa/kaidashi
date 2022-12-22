@@ -24,6 +24,9 @@
       @media(max-width: 991px) {
         width: 75%;
       }
+      @media(max-width: 767px) {
+        margin-top: 3rem;
+      }
       @media(max-width: 576px) {
         width: 90%;
       }
@@ -32,6 +35,10 @@
         display: grid;
         grid-template-rows: 1fr 1fr;
         gap: 10%;
+        @media(max-width: 767px) {
+          grid-template-rows: 2fr 1fr;
+          gap: 0;
+        }
     
         & > div:first-child {
           display: flex;
@@ -82,7 +89,7 @@
             color: white;
             cursor: pointer;
             @media(max-width: 767px) {
-              width: 100%;
+              width: 50%;
               padding: 0.8rem 1rem;
             }
 
@@ -98,11 +105,11 @@
         margin-top: 1rem;
 
         .itemIndex {
-          margin-bottom: 1rem;
           display: grid;
           grid-template-rows: 1fr;
           grid-template-columns: 30% 20% 30% repeat(2, 10%);
           @media(max-width: 576px) {
+            margin-bottom: 1rem;
             grid-template-columns: 1fr repeat(4, 18%);
           }
   
@@ -120,60 +127,67 @@
             }
           }
     
-          .spinnerWrapper {
+          .Spinner {   
             display: flex;
             justify-content: center;
-  
-            & > input {
-              width: 50%;
-              text-align: center;
-            }
-        
-            input[type="number"] {
-              padding: 0 .2rem;
-            }
-        
-            .spinnerUp {
-              position: relative;
-              right: 0;
-              width: 20%;
-              border: solid 2px rgba(128, 128, 128, 0.5);
-              border-radius: 2px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              cursor: pointer;
-              background: rgb(190, 190, 190);
-              color: white;
-        
-              &::before {
-                content: '+';
-                position: absolute;
-              }
-            }
+            align-items: center;
             
-            .spinnerDown {
-              position: relative;
-              left: 0;
-              width: 20%;
-              border: solid 2px rgba(128, 128, 128, 0.5);
-              border-radius: 2px;
+            .spinnerWrapper {
               display: flex;
               justify-content: center;
-              align-items: center;
-              cursor: pointer;
-              background: rgb(190, 190, 190);
-              color: white;
-        
-              &::before {
-                content: '-';
-                position: absolute;
+              height: 1.5rem;
+    
+              & > input {
+                width: 50%;
+                text-align: center;
               }
-            }
-
-            span:nth-of-type(3) {
-              display: flex;
-              align-items: center;
+          
+              input[type="number"] {
+                padding: 0 .2rem;
+              }
+          
+              .spinnerUp {
+                position: relative;
+                right: 0;
+                width: 20%;
+                border: solid 2px rgba(128, 128, 128, 0.5);
+                border-radius: 2px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                background: rgb(190, 190, 190);
+                color: white;
+          
+                &::before {
+                  content: '+';
+                  position: absolute;
+                }
+              }
+              
+              .spinnerDown {
+                position: relative;
+                left: 0;
+                width: 20%;
+                border: solid 2px rgba(128, 128, 128, 0.5);
+                border-radius: 2px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                background: rgb(190, 190, 190);
+                color: white;
+          
+                &::before {
+                  content: '-';
+                  position: absolute;
+                }
+              }
+  
+              span:nth-of-type(3) {
+                display: flex;
+                align-items: center;
+              }
             }
           }
   
