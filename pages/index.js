@@ -192,7 +192,7 @@ export default function Index({data}) {
               </div>
               <div><input type="submit" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
             </form>
-            <form onSubmit={(e)=> {e.preventDefault}} id="item_update" className={indexStyles.itemIndexWrapper}>
+            <form onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>
               {/* <table> */}
                 {/* <tbody ref={tbody}> */}
                   {itemList} {/*動的なレイアウトは上記で定義*/}
