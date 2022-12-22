@@ -3,10 +3,10 @@
   display: grid;
   grid-template-rows: 1fr auto 1fr;
   min-height: 100vh;
+  background: #FFD903;
 }
 .container .main {
   grid-row: 2;
-  background: #FFD903;
   height: 1500px;
 }
 .container .main .observeTarget {
@@ -92,25 +92,44 @@
   color: rgb(227, 227, 227);
   background: #00115a;
 }
-.container .main .mainWrapper table {
-  border-collapse: separate;
+.container .main .mainWrapper .itemIndexWrapper {
+  margin-top: 1rem;
 }
-.container .main .mainWrapper table tr > td > input[name=status_flag] {
-  display: none;
+.container .main .mainWrapper .itemIndexWrapper .itemIndex {
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 30% 20% 30% repeat(2, 10%);
 }
-.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper {
-  width: 100%;
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper .itemIndex {
+    grid-template-columns: 1fr repeat(4, 18%);
+  }
+}
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div {
+  border-radius: 5px;
+  background: black;
+  color: white;
+  padding: 0.5rem 0.8rem;
+  margin: 0.5px;
   display: flex;
   justify-content: center;
 }
-.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper > input {
-  width: 60%;
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div > input[name=status_flag] {
+  display: none;
+}
+.container .main .mainWrapper .itemIndexWrapper .itemIndex .spinnerWrapper {
+  display: flex;
+  justify-content: center;
+}
+.container .main .mainWrapper .itemIndexWrapper .itemIndex .spinnerWrapper > input {
+  width: 50%;
   text-align: center;
 }
-.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper input[type=number] {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex .spinnerWrapper input[type=number] {
   padding: 0 0.2rem;
 }
-.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper .spinnerUp {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex .spinnerWrapper .spinnerUp {
   position: relative;
   right: 0;
   width: 20%;
@@ -123,11 +142,11 @@
   background: rgb(190, 190, 190);
   color: white;
 }
-.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper .spinnerUp::before {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex .spinnerWrapper .spinnerUp::before {
   content: "+";
   position: absolute;
 }
-.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper .spinnerDown {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex .spinnerWrapper .spinnerDown {
   position: relative;
   left: 0;
   width: 20%;
@@ -140,36 +159,73 @@
   background: rgb(190, 190, 190);
   color: white;
 }
-.container .main .mainWrapper table tr > td:nth-child(3) .spinnerWrapper .spinnerDown::before {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex .spinnerWrapper .spinnerDown::before {
   content: "-";
   position: absolute;
 }
-.container .main .mainWrapper table tr > td:nth-child(4) label span {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex .spinnerWrapper span:nth-of-type(3) {
+  display: flex;
+  align-items: center;
+}
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:first-child {
+  align-items: center;
+}
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:first-child {
+    grid-column-start: 1;
+    grid-column-end: 6;
+  }
+}
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(2) {
+  align-items: center;
+}
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(2) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+}
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(3) {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+}
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(4) {
+  align-items: center;
+}
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(4) {
+    grid-column-start: 4;
+    grid-column-end: 5;
+  }
+}
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(4) label span {
   padding: 0.3rem;
   border-radius: 2px;
   border: solid 0.1px white;
   cursor: pointer;
 }
-.container .main .mainWrapper table tr > td:nth-child(4) label span:hover {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(4) label span:hover {
   color: rgb(227, 227, 227);
 }
-.container .main .mainWrapper table tr > td:last-child {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:last-child {
   text-decoration: underline;
+  align-items: center;
 }
-.container .main .mainWrapper table tr > td:last-child:hover {
-  color: rgb(227, 227, 227);
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:last-child {
+    grid-column-start: 5;
+    grid-column-end: 6;
+  }
 }
-.container .main .mainWrapper table tr > td:last-child > span {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:last-child > span {
   cursor: pointer;
 }
-.container .main .mainWrapper table tr td {
-  border: solid 1px black;
-  border-radius: 5px;
-  background: black;
-  color: white;
-  padding: 0.5rem 0.8rem;
+.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:last-child > span:hover {
+  color: rgb(227, 227, 227);
 }
-.container .main .mainWrapper table tr td:nth-child(2), .container .main .mainWrapper table tr td:last-child {
+.container .main .mainWrapper .itemIndexWrapper .itemIndex div:nth-child(2), .container .main .mainWrapper .itemIndexWrapper .itemIndex div:last-child {
   white-space: nowrap;
 }
 .container .main .mainWrapper .updateBtn {
