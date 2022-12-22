@@ -56,7 +56,6 @@ export default function Index({data}) {
       display: 'flex'
     });
     
-    // const hamburgerBtn = hamburgerBtn.current;
     Object.assign(hamburgerBtn.current.style, {
       display: 'flex'
     });
@@ -79,7 +78,7 @@ export default function Index({data}) {
   function Items() {
     let items = [];
         items = [
-          {'品名': '納豆', '価格': 100, '個数': 5, 'status': 1},
+          {'品名': '納豆', '価格': 10000, '個数': 5, 'status': 1},
           {'品名': '牛乳', '価格': 150, '個数': 1, 'status': 0},
           {'品名': 'ブロッコリースプラウトブロッコリースプラウト', '価格': 110, '個数': 1, 'status': 1}
         ];
@@ -91,23 +90,21 @@ export default function Index({data}) {
     if(Items().length >= 1) {
       let statusFlag = item['status'] == 1 ? <span style={{backgroundColor: '#00187C'}}>済</span> : <span style={{backgroundColor: '#9F0000'}}>未</span>;
       return(
-        <tr key={index}>
-          <td>{item['品名']}</td>
-          <td>{item['価格']} 円</td>
-          <td>
-            <div className={indexStyles.spinnerWrapper}>
-              <span className={indexStyles.spinnerDown} onClick={(e)=> {spinnerUpDown(e, 'Decrease')}}></span>
-              <input type="number" min="0" name="update_item_number" step="1" id={'update_item_number'+ index} key={index} ref={updateItemNumberRefs.current[index]} />
-              <span className={indexStyles.spinnerUp} onClick={(e)=> {spinnerUpDown(e, 'Increase')}} id={index}></span>
-              &nbsp;個
-            </div>
-          </td>
-          <td>
+        <div key={index} className={indexStyles.itemIndex}>
+          <div>{item['品名']}</div>
+          <div>{item['価格']} 円</div>
+          <div className={indexStyles.spinnerWrapper}>
+            <span className={indexStyles.spinnerDown} onClick={(e)=> {spinnerUpDown(e, 'Decrease')}}></span>
+            <input type="number" min="0" name="update_item_number" step="1" id={'update_item_number'+ index} key={index} ref={updateItemNumberRefs.current[index]} />
+            <span className={indexStyles.spinnerUp} onClick={(e)=> {spinnerUpDown(e, 'Increase')}} id={index}></span>
+            <span>&nbsp;個</span>
+          </div>
+          <div>
             <input type="checkbox" name="status_flag" id="status_flag" />
             <label htmlFor="status_flag" className={indexStyles.statusFlag}>{statusFlag}</label>
-          </td>
-          <td key={index} ref={itemDeleteBtnRefs.current[index]} id={'item_delete' + index}><span>削除</span></td>
-        </tr>
+          </div>
+          <div ref={itemDeleteBtnRefs.current[index]} id={'item_delete' + index}><span>削除</span></div>
+        </div>
       )
     }
   });
@@ -193,12 +190,12 @@ export default function Index({data}) {
               </div>
               <div><input type="submit" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
             </form>
-            <form onSubmit={(e)=> {e.preventDefault}} id="item_update">
-              <table>
-                <tbody ref={tbody}>
+            <form onSubmit={(e)=> {e.preventDefault}} id="item_update" className={indexStyles.itemIndexWrapper}>
+              {/* <table> */}
+                {/* <tbody ref={tbody}> */}
                   {itemList} {/*動的なレイアウトは上記で定義*/}
-                </tbody>
-              </table>
+                {/* </tbody> */}
+              {/* </table> */}
             </form>
             <input type="submit" form="item_update" value="更新" className={indexStyles.updateBtn} />
             <div className={indexStyles.toTopWrapper} ref={toTop} alt="topへ戻る" title="topへ戻る">
