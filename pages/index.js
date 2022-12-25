@@ -90,8 +90,8 @@ export default function Index({data}) {
     if(Items().length >= 1) {
       let statusFlag = item['status'] == 1 ? <span style={{backgroundColor: '#00187C'}}>済</span> : <span style={{backgroundColor: '#9F0000'}}>未</span>;
       return(
-        <div key={index} className={indexStyles.itemIndex}>
-          <div>{item['品名']}</div>
+        <li key={index} className={indexStyles.itemIndex}>
+          <div><span>{item['品名']}</span></div>
           <div>{item['価格']} 円</div>
           <div className={indexStyles.Spinner}>
             <div className={indexStyles.spinnerWrapper}>
@@ -106,7 +106,7 @@ export default function Index({data}) {
             <label htmlFor="status_flag" className={indexStyles.statusFlag}>{statusFlag}</label>
           </div>
           <div ref={itemDeleteBtnRefs.current[index]} id={'item_delete' + index}><span>削除</span></div>
-        </div>
+        </li>
       )
     }
   });
@@ -193,11 +193,9 @@ export default function Index({data}) {
               <div><input type="submit" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
             </form>
             <form onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>
-              {/* <table> */}
-                {/* <tbody ref={tbody}> */}
-                  {itemList} {/*動的なレイアウトは上記で定義*/}
-                {/* </tbody> */}
-              {/* </table> */}
+              <ul>
+                {itemList} {/*動的なレイアウトは上記で定義*/}
+              </ul>
             </form>
             <input type="submit" form="item_update" value="更新" className={indexStyles.updateBtn} />
             <div className={indexStyles.toTopWrapper} ref={toTop} alt="topへ戻る" title="topへ戻る">

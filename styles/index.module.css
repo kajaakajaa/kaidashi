@@ -3,7 +3,7 @@
   display: grid;
   grid-template-rows: 1fr auto 1fr;
   min-height: 100vh;
-  background: #FFD903;
+  background: #FFD700;
 }
 .container .main {
   grid-row: 2;
@@ -86,6 +86,7 @@
   align-items: center;
 }
 .container .main .mainWrapper .registItem > div:last-child .registItemBtn {
+  width: 200px;
   padding: 0.5rem 1rem;
   border-radius: 5px;
   border: solid 1.5px rgb(196, 196, 196);
@@ -95,7 +96,8 @@
 }
 @media (max-width: 767px) {
   .container .main .mainWrapper .registItem > div:last-child .registItemBtn {
-    width: 50%;
+    width: 100%;
+    border-radius: 50px;
     padding: 0.8rem 1rem;
   }
 }
@@ -106,18 +108,20 @@
 .container .main .mainWrapper .itemIndexWrapper {
   margin-top: 1rem;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex {
+.container .main .mainWrapper .itemIndexWrapper > ul {
+  padding: 0;
+}
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 30% 20% 30% repeat(2, 10%);
 }
 @media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper .itemIndex {
-    margin-bottom: 1rem;
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex {
     grid-template-columns: 1fr repeat(4, 18%);
   }
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div {
   border-radius: 5px;
   background: black;
   color: white;
@@ -126,27 +130,27 @@
   display: flex;
   justify-content: center;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div > input[name=status_flag] {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div > input[name=status_flag] {
   display: none;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner .spinnerWrapper {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper {
   display: flex;
   justify-content: center;
   height: 1.5rem;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner .spinnerWrapper > input {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper > input {
   width: 50%;
   text-align: center;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner .spinnerWrapper input[type=number] {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper input[type=number] {
   padding: 0 0.2rem;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner .spinnerWrapper .spinnerUp {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper .spinnerUp {
   position: relative;
   right: 0;
   width: 20%;
@@ -159,11 +163,11 @@
   background: rgb(190, 190, 190);
   color: white;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner .spinnerWrapper .spinnerUp::before {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper .spinnerUp::before {
   content: "+";
   position: absolute;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner .spinnerWrapper .spinnerDown {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper .spinnerDown {
   position: relative;
   left: 0;
   width: 20%;
@@ -176,73 +180,90 @@
   background: rgb(190, 190, 190);
   color: white;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner .spinnerWrapper .spinnerDown::before {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper .spinnerDown::before {
   content: "-";
   position: absolute;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex .Spinner .spinnerWrapper span:nth-of-type(3) {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper span:nth-of-type(3) {
   display: flex;
   align-items: center;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:first-child {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child {
   align-items: center;
+  position: relative;
+  text-decoration: underline;
 }
 @media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:first-child {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child {
     grid-column-start: 1;
     grid-column-end: 6;
+    background: none;
+    color: black;
+    justify-content: flex-start;
   }
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(2) {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child::before {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: black;
+  border-radius: 100%;
+  left: 0;
+}
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child > span {
+  cursor: pointer;
+}
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(2) {
   align-items: center;
 }
 @media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(2) {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(2) {
     grid-column-start: 1;
     grid-column-end: 2;
   }
 }
 @media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(3) {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) {
     grid-column-start: 2;
     grid-column-end: 4;
   }
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(4) {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(4) {
   align-items: center;
 }
 @media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(4) {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(4) {
     grid-column-start: 4;
     grid-column-end: 5;
   }
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(4) label span {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(4) label span {
   padding: 0.3rem;
   border-radius: 2px;
   border: solid 0.1px white;
   cursor: pointer;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:nth-child(4) label span:hover {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(4) label span:hover {
   color: rgb(227, 227, 227);
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:last-child {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:last-child {
   text-decoration: underline;
   align-items: center;
 }
 @media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper .itemIndex > div:last-child {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:last-child {
     grid-column-start: 5;
     grid-column-end: 6;
   }
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:last-child > span {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:last-child > span {
   cursor: pointer;
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex > div:last-child > span:hover {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:last-child > span:hover {
   color: rgb(227, 227, 227);
 }
-.container .main .mainWrapper .itemIndexWrapper .itemIndex div:nth-child(2), .container .main .mainWrapper .itemIndexWrapper .itemIndex div:last-child {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex div:nth-child(2), .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex div:last-child {
   white-space: nowrap;
 }
 .container .main .mainWrapper .updateBtn {
