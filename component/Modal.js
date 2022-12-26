@@ -45,10 +45,6 @@ export default function Modal() {
     }
   }
 
-  useEffect(()=> {
-    return()=> {}
-  })
-
   return(
     <>
       <input type="checkbox" id="hamburger_flag" className={modalStyles.modalFlag} ref={value.modalFlag} />

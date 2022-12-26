@@ -87,9 +87,6 @@ export default function Header(props) {
     }
   }
 
-  useEffect(()=> {
-  })
-
   return(
     <>
       <HeaderContext.Provider value={value}>

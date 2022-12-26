@@ -87,6 +87,22 @@ export default function Index({data}) {
     });
   }
 
+  function reverseFlag() {
+    data['dataProps'].forEach((e, i)=> {
+      let Btn = purchaseStatusBtnRefs.current[i].current;
+      Btn.addEventListener('click', (e)=> {
+        if(e.target.innerHTML == '未') {
+          e.target.style.backgroundColor = 'rgb(0, 24, 124)';
+          e.target.innerHTML = '済';
+        }
+        else {
+          e.target.style.backgroundColor = 'rgb(159, 0, 0)';
+          e.target.innerHTML = '未';
+        }
+      })
+    });
+  }
+
   //serverSidePropsに記述する（tbodyにレンダリングするデータ）※関数ではなく、変数であることに注意。
   const itemList = data['dataProps'].map((item, index)=> {
     if(data['dataProps'].length >= 1) {
@@ -146,25 +162,9 @@ export default function Index({data}) {
     });
   }
 
-  function reverseFlag() {
-    data['dataProps'].forEach((e, i)=> {
-      let Btn = purchaseStatusBtnRefs.current[i].current;
-      Btn.addEventListener('click', (e)=> {
-        if(e.target.innerHTML == '未') {
-          e.target.style.backgroundColor = 'rgb(0, 24, 124)';
-          e.target.innerHTML = '済';
-        }
-        else {
-          e.target.style.backgroundColor = 'rgb(159, 0, 0)';
-          e.target.innerHTML = '未';
-        }
-      })
-    });
-  }
-
   function setList() {
     //ログアウト・退会の表示
-    signAreaShow();
+    // signAreaShow();
     Observer(observerDoms);
     switchRegistBtn();
     reverseFlag();
@@ -179,7 +179,7 @@ export default function Index({data}) {
       setList();
       
       return()=> {}
-    }, []);
+    });
 
     return(
       <>
@@ -190,9 +190,9 @@ export default function Index({data}) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className={indexStyles.container} id="top">
-          <IndexHeaderContext.Provider value={value}>
+          {/* <IndexHeaderContext.Provider value={value}>
             <Header />
-          </IndexHeaderContext.Provider>
+          </IndexHeaderContext.Provider> */}
           <main className={indexStyles.main}>
             <div className={indexStyles.observeTarget} ref={observeTarget}></div> 
             <div className={indexStyles.mainWrapper}>
