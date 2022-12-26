@@ -158,6 +158,7 @@ export default function Index({data}) {
           e.target.style.backgroundColor = 'rgb(159, 0, 0)';
           e.target.innerHTML = '未';
         }
+      })
     });
   }
 
@@ -166,7 +167,7 @@ export default function Index({data}) {
     signAreaShow();
     Observer(observerDoms);
     switchRegistBtn();
-    reverseFlag();
+    // reverseFlag();
 
     data['dataProps'].forEach((item, index)=> { //データ数(レコード数)を取得
       updateItemNumberRefs.current[index].current.value = item['number'];
