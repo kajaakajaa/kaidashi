@@ -130,9 +130,6 @@
   display: flex;
   justify-content: center;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div > input[name=status_flag] {
-  display: none;
-}
 .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner {
   display: flex;
   justify-content: center;
@@ -247,6 +244,9 @@
 .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(4) label span:hover {
   color: rgb(227, 227, 227);
 }
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(4) > input[name=status_flag] {
+  display: none;
+}
 .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:last-child {
   text-decoration: underline;
   align-items: center;
@@ -304,7 +304,7 @@
 .container .main .mainWrapper .toTopWrapper > a::before {
   content: "∧";
   position: absolute;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: white;
 }
 .container .main .mainWrapper .toTopWrapper > a:hover {

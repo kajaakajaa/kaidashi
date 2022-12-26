@@ -125,10 +125,6 @@
               margin: .5px;
               display: flex;
               justify-content: center;
-    
-              & > input[name="status_flag"] {
-                display: none;
-              }
             }
       
             .Spinner {   
@@ -258,6 +254,10 @@
                   }
                 }
               }
+
+              & > input[name="status_flag"] {
+                display: none;
+              }
             }
     
             & > div:last-child {
@@ -325,7 +325,7 @@
           &::before {
             content: '\02227';
             position: absolute;
-            font-size: 1.5rem;
+            font-size: 1rem;
             color: white;
           }
 
