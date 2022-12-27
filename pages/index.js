@@ -164,7 +164,7 @@ export default function Index({data}) {
 
   function setList() {
     //ログアウト・退会の表示
-    // signAreaShow();
+    signAreaShow();
     Observer(observerDoms);
     switchRegistBtn();
     reverseFlag();
@@ -174,13 +174,15 @@ export default function Index({data}) {
     });
   }
 
-  if(data['user_id'] == 1) {
-    useEffect(()=> {
+  useEffect(()=> {
+    if(data['user_id'] == 1) {
       setList();
-      
-      return()=> {}
-    });
+    }
+    
+    return()=> {}
+  });
 
+  if(data['user_id'] == 1) {
     return(
       <>
         <Head>
@@ -190,9 +192,9 @@ export default function Index({data}) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className={indexStyles.container} id="top">
-          {/* <IndexHeaderContext.Provider value={value}>
+          <IndexHeaderContext.Provider value={value}>
             <Header />
-          </IndexHeaderContext.Provider> */}
+          </IndexHeaderContext.Provider>
           <main className={indexStyles.main}>
             <div className={indexStyles.observeTarget} ref={observeTarget}></div> 
             <div className={indexStyles.mainWrapper}>
