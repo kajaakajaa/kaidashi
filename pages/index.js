@@ -32,6 +32,14 @@ export default function Index({data}) {
   const registItemBtn = useRef(null);
   const purchaseStatusFlagRefs = useRef([]);
   const purchaseStatusBtnRefs = useRef([]);
+  const Item = useRef(null);
+  const Price = useRef(null);
+  const itemNumber = useRef(null);
+  const Main = useRef(null);
+  const errorItem = useRef(null);
+  const errorPrice = useRef(null);
+  const errorNumber = useRef(null);
+  const [registItemForm, setRegistItemForm] = useState(false);
 
   //topボタンの表示・非表示処理の為のdom
   const observerDoms = {
@@ -74,17 +82,53 @@ export default function Index({data}) {
     });
   }
 
-  //新規商品登録ボタンのレスポンシブで役割切り替え
-  function switchRegistBtn() {
-    const registItemSwitch = registItemBtn.current;
-    registItemSwitch.addEventListener('click', ()=> {
-      if(window.innerWidth <= 767) {
-        console.log('ipad以下');
-      }
-      else {
-        console.log('pc');
-      }
+  //新商品登録のフォームエラーcheck
+  function errorCheck() {
+    let errorCount = 0;
+    errorItem.current.style.display = '';
+    errorPrice.current.style.display = '';
+    errorNumber.current.style.display = '';
+    if(Item.current.value == '' || Item.current.value == null) {
+      errorItem.current.style.display = 'block';
+      errorCount++;
+    }
+    if(Price.current.value == '' || Price.current.value == null) {
+      errorPrice.current.style.display = 'block';
+      errorCount++;
+    }
+    if(itemNumber.current.value == '' || itemNumber.current.value == null) {
+      errorNumber.current.style.display = 'block';
+      errorCount++;
+    }
+    return errorCount;
+  }
+
+  //新規商品登録ボタンの役割レスポンシブの境を監視・役割切り替え
+  function resizeObserver() {
+    const resizeObserver  = new ResizeObserver((entries)=> {
+      entries.forEach((entry, _)=> {
+        const isSmall = entry.contentRect.width <= 767;
+        if(isSmall) {
+          registItemBtn.current.type = 'button';
+          registItemBtn.current.addEventListener('click', ()=> {
+            if(errorCheck() < 1) {
+              console.log('送信成功');
+              setRegistItemForm(!registItemForm);
+            }
+          });
+        }
+        else {
+          registItemBtn.current.type = 'submit';
+          registItemBtn.current.addEventListener('click', ()=> {
+            if(errorCheck() < 1) {
+              console.log('送信成功');
+              setRegistItemForm(!registItemForm);
+            }
+          });
+        }
+      });
     });
+    resizeObserver.observe(Main.current);
   }
 
   function reverseFlag() {
@@ -166,8 +210,8 @@ export default function Index({data}) {
     //ログアウト・退会の表示
     signAreaShow();
     Observer(observerDoms);
-    switchRegistBtn();
     reverseFlag();
+    resizeObserver();
 
     data['dataProps'].forEach((item, index)=> { //データ数(レコード数)を取得
       updateItemNumberRefs.current[index].current.value = item['number'];
@@ -179,8 +223,15 @@ export default function Index({data}) {
       setList();
     }
     
-    return()=> {}
-  });
+    return()=> {
+      Item.current.value = '';
+      Price.current.value = '';
+      itemNumber.current.value = '';
+      errorItem.current.style.display = '';
+      errorPrice.current.style.display = '';
+      errorNumber.current.style.display = '';
+    }
+  }, [registItemForm]);
 
   if(data['user_id'] == 1) {
     return(
@@ -195,25 +246,28 @@ export default function Index({data}) {
           <IndexHeaderContext.Provider value={value}>
             <Header />
           </IndexHeaderContext.Provider>
-          <main className={indexStyles.main}>
+          <main className={indexStyles.main} ref={Main}>
             <div className={indexStyles.observeTarget} ref={observeTarget}></div> 
             <div className={indexStyles.mainWrapper}>
-              <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault()}}>
+              <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault();}}>
                 <div>
                   <div>
                     <label htmlFor="item_name">品名</label>
-                    <input type="text" name="item_name" id="item_name" />
+                    <input type="text" name="item_name" id="item_name" ref={Item} />
+                    <p className={`${indexStyles.errorMessage} ${indexStyles.errorItem}`} ref={errorItem}>※ 品名を入力して下さい。</p>
                   </div>
                   <div>
                     <label htmlFor="price">価格</label>
-                    <input type="number" min="0" name="price" id="price" />
+                    <input type="number" min="0" name="price" id="price" ref={Price} />
+                    <p className={`${indexStyles.errorMessage} ${indexStyles.errorPrice}`} ref={errorPrice}>※ 価格を入力して下さい。</p>
                   </div>
                   <div>
                     <label htmlFor="regist_item_number">個数</label>
-                    <input type="number" min="0" name="regist_item_number" id="regist_item_number" />
+                    <input type="number" min="0" name="regist_item_number" id="regist_item_number" ref={itemNumber} />
+                    <p className={`${indexStyles.errorMessage} ${indexStyles.errorNumber}`} ref={errorNumber}>※ 個数を入力して下さい。</p>
                   </div>
                 </div>
-                <div><input type="submit" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
+                <div><input type="button" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
               </form>
               <form onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>
                 <ul>

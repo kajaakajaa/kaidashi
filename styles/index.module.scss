@@ -56,10 +56,10 @@
               margin-bottom: .5rem;
             }
   
-            span {
-              width: 15%;
-              height: 2.5rem;
-            }
+            // span {
+            //   width: 15%;
+            //   height: 2.5rem;
+            // }
   
             input:not([name="regist_item_number"]) {
               border-radius: 5px;
@@ -72,6 +72,13 @@
               padding: 2px .5rem;
               border: solid 1.5px rgb(196 196 196);
               border-radius: 5px;
+            }
+
+            .errorMessage {
+              margin: 0;
+              color: red;
+              display: none;
+              font-size: .8rem;
             }
           }
         }
