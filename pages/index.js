@@ -9,7 +9,7 @@ import { Link as Scroll } from 'react-scroll';
 export async function getServerSideProps() {
   let query = {};
       query['user_id'] = 1;
-  const result = await fetch('https://kajaaserver.com/sumunaka_php/sql_data.php?mode=set_list_data', {
+  const result = await fetch('https://kajaaserver.com/kaidashi_php/sql_data.php?mode=set_list_data', {
     method: 'POST',
     body: JSON.stringify(query)
   });
@@ -107,9 +107,9 @@ export default function Index({data}) {
   function resizeObserver() {
     const resizeObserver  = new ResizeObserver((entries)=> {
       entries.forEach((entry, _)=> {
-        const isSmall = entry.contentRect.width <= 767;
+        const isSmall = entry.contentRect.width <= 768;
         if(isSmall) {
-          registItemBtn.current.type = 'button';
+          registItemBtn.current.type = 'button'; //ipad以下
           registItemBtn.current.addEventListener('click', ()=> {
             if(errorCheck() < 1) {
               console.log('送信成功');
@@ -118,11 +118,29 @@ export default function Index({data}) {
           });
         }
         else {
-          registItemBtn.current.type = 'submit';
+          registItemBtn.current.type = 'submit'; //pc以上
           registItemBtn.current.addEventListener('click', ()=> {
-            if(errorCheck() < 1) {
-              console.log('送信成功');
-              setRegistItemForm(!registItemForm);
+            if(errorCheck() == 0) {
+              let query = {};
+                  query['user_id'] = data['user_id'];
+                  query['item_name'] = Item.current.value;
+                  query['price'] = Price.current.value;
+                  query['number'] = itemNumber.current.value;
+              (async()=> {
+                const result = await fetch('/api/request?mode=regist_item', {
+                  method: 'POST',
+                  headers: {'Content-type': 'application/json'},
+                  body: JSON.stringify(query)
+                });
+                setRegistItemForm(!registItemForm);
+                const data = await result.json();
+                if(data['data_from_php'] == 1) {
+                  window.location.reload();
+                }
+                else {
+                  console.log('既に登録がありよる！');
+                }
+              })();
             }
           });
         }
@@ -131,7 +149,7 @@ export default function Index({data}) {
     resizeObserver.observe(Main.current);
   }
 
-  function reverseFlag() {
+  function reversePurchaseFlag() {
     data['dataProps'].forEach((e, i)=> {
       let Btn = purchaseStatusBtnRefs.current[i].current;
       Btn.addEventListener('click', (e)=> {
@@ -147,7 +165,7 @@ export default function Index({data}) {
     });
   }
 
-  //serverSidePropsに記述する（tbodyにレンダリングするデータ）※関数ではなく、変数であることに注意。
+  //※jsxに挿入する要素は関数ではなく、変数であることに注意。
   const itemList = data['dataProps'].map((item, index)=> {
     if(data['dataProps'].length >= 1) {
       let statusFlag = item['purchase_status'] == 0 ? false : true;
@@ -168,7 +186,7 @@ export default function Index({data}) {
             <input type="checkbox" name="status_flag" id={"status_flag" + index} ref={purchaseStatusFlagRefs.current[index]} defaultChecked={statusFlag} />
             <label htmlFor={"status_flag" + index}>{purchase_status}</label>
           </div>
-          <div ref={itemDeleteBtnRefs.current[index]} id={'item_delete' + index}><span>削除</span></div>
+          <div ref={itemDeleteBtnRefs.current[index]}><span>削除</span></div>
         </li>
       )
     }
@@ -206,21 +224,18 @@ export default function Index({data}) {
     });
   }
 
-  function setList() {
-    //ログアウト・退会の表示
-    signAreaShow();
-    Observer(observerDoms);
-    reverseFlag();
-    resizeObserver();
-
-    data['dataProps'].forEach((item, index)=> { //データ数(レコード数)を取得
-      updateItemNumberRefs.current[index].current.value = item['number'];
-    });
-  }
-
   useEffect(()=> {
     if(data['user_id'] == 1) {
-      setList();
+      //個数をデータベースより反映表示
+      data['dataProps'].forEach((item, index)=> {
+        updateItemNumberRefs.current[index].current.value = item['number'];
+      });
+
+      //ログアウト・退会の表示
+      signAreaShow();
+      Observer(observerDoms);
+      reversePurchaseFlag()
+      resizeObserver();
     }
     
     return()=> {
@@ -269,7 +284,7 @@ export default function Index({data}) {
                 </div>
                 <div><input type="button" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
               </form>
-              <form onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>
+              <form method="post" action="/" onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>
                 <ul>
                   {itemList} {/*動的なレイアウトは上記で定義*/}
                 </ul>
