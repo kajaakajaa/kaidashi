@@ -7,7 +7,6 @@
 }
 .container .main {
   grid-row: 2;
-  height: 1500px;
 }
 .container .main .observeTarget {
   position: absolute;
@@ -127,29 +126,75 @@
   border-radius: 5px;
   background: black;
   color: white;
-  padding: 0.5rem 0.8rem;
+  padding: 0.5rem 1.3rem;
   margin: 0.5px;
   display: flex;
   justify-content: center;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child {
+  align-items: center;
+  position: relative;
+  justify-content: flex-start;
+}
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child {
+    grid-column-start: 1;
+    grid-column-end: 6;
+    background: none;
+    color: black;
+  }
+}
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child::before {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: black;
+    border-radius: 100%;
+    left: 0;
+  }
+}
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child > span {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child > span:hover {
+  color: rgb(227, 227, 227);
+}
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(2) {
+  align-items: center;
+}
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(2) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+}
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper {
+@media (max-width: 576px) {
+  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) {
+    grid-column-start: 2;
+    grid-column-end: 4;
+  }
+}
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) .spinnerWrapper {
   display: flex;
   justify-content: center;
   height: 1.5rem;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper > input {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) .spinnerWrapper > input {
   width: 50%;
   text-align: center;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper input[type=number] {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) .spinnerWrapper input[type=number] {
   padding: 0 0.2rem;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper .spinnerUp {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) .spinnerWrapper .spinnerUp {
   position: relative;
   right: 0;
   width: 20%;
@@ -162,11 +207,11 @@
   background: rgb(190, 190, 190);
   color: white;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper .spinnerUp::before {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) .spinnerWrapper .spinnerUp::before {
   content: "+";
   position: absolute;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper .spinnerDown {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) .spinnerWrapper .spinnerDown {
   position: relative;
   left: 0;
   width: 20%;
@@ -179,54 +224,13 @@
   background: rgb(190, 190, 190);
   color: white;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper .spinnerDown::before {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) .spinnerWrapper .spinnerDown::before {
   content: "-";
   position: absolute;
 }
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex .Spinner .spinnerWrapper span:nth-of-type(3) {
+.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) .spinnerWrapper span:nth-of-type(3) {
   display: flex;
   align-items: center;
-}
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child {
-  align-items: center;
-  position: relative;
-  text-decoration: underline;
-}
-@media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child {
-    grid-column-start: 1;
-    grid-column-end: 6;
-    background: none;
-    color: black;
-    justify-content: flex-start;
-  }
-}
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child::before {
-  content: "";
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background: black;
-  border-radius: 100%;
-  left: 0;
-}
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:first-child > span {
-  cursor: pointer;
-}
-.container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(2) {
-  align-items: center;
-}
-@media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(2) {
-    grid-column-start: 1;
-    grid-column-end: 2;
-  }
-}
-@media (max-width: 576px) {
-  .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(3) {
-    grid-column-start: 2;
-    grid-column-end: 4;
-  }
 }
 .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:nth-child(4) {
   align-items: center;

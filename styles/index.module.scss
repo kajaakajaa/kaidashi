@@ -6,7 +6,6 @@
   
   .main {
     grid-row: 2;
-    height: 1500px;
 
     .observeTarget {
       position: absolute;
@@ -128,16 +127,63 @@
               border-radius: 5px;
               background: black;
               color: white;
-              padding: .5rem .8rem;
+              padding: .5rem 1.3rem;
               margin: .5px;
               display: flex;
               justify-content: center;
             }
-      
-            .Spinner {   
+    
+            & > div:first-child {
+              align-items: center;
+              position: relative;
+              justify-content: flex-start;
+  
+              @media(max-width: 576px) {
+                grid-column-start: 1;
+                grid-column-end: 6;
+                background: none;
+                color: black;
+              }
+
+              &::before {
+                @media(max-width: 576px) {
+                  content: '';
+                  position: absolute;
+                  width: 5px;
+                  height: 5px;
+                  background: black;
+                  border-radius: 100%;
+                  left: 0;
+                }
+              }
+
+              & > span {
+                cursor: pointer;
+                text-decoration: underline;
+
+                &:hover {
+                  color: rgb(227, 227, 227);
+                }
+              }
+            }
+    
+            & > div:nth-child(2) {
+              align-items: center;
+  
+              @media(max-width: 576px) {
+                grid-column-start: 1;
+                grid-column-end: 2;
+              }
+            }
+
+            & > div:nth-child(3) { //.Spinner
               display: flex;
               justify-content: center;
               align-items: center;
+              @media(max-width: 576px) {
+                grid-column-start: 2;
+                grid-column-end: 4;
+              }
               
               .spinnerWrapper {
                 display: flex;
@@ -195,49 +241,6 @@
                   display: flex;
                   align-items: center;
                 }
-              }
-            }
-    
-            & > div:first-child {
-              align-items: center;
-              position: relative;
-              text-decoration: underline;
-  
-              @media(max-width: 576px) {
-                grid-column-start: 1;
-                grid-column-end: 6;
-                background: none;
-                color: black;
-                justify-content: flex-start;
-              }
-
-              &::before {
-                content: '';
-                position: absolute;
-                width: 5px;
-                height: 5px;
-                background: black;
-                border-radius: 100%;
-                left: 0;
-              }
-
-              & > span {
-                cursor: pointer;
-              }
-            }
-    
-            & > div:nth-child(2) {
-              align-items: center;
-  
-              @media(max-width: 576px) {
-                grid-column-start: 1;
-                grid-column-end: 2;
-              }
-            }
-            & > div:nth-child(3) {
-              @media(max-width: 576px) {
-                grid-column-start: 2;
-                grid-column-end: 4;
               }
             }
             
