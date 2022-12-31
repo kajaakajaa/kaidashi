@@ -4,20 +4,14 @@ import headerStyles from '../styles/header.module.css';
 import React, { useRef, useContext, createContext } from 'react';
 export const HeaderContext = createContext();
 import { Modal } from './index';
-import { IndexHeaderContext } from '../pages/';
+import { IndexContainerContext } from '../pages/';
 import { SignInHeaderContext } from '../pages/signIn';
 import { SignUpHeaderContext } from '../pages/signUp';
 
 export default function Header() {
-  const modalFlag = useRef(null);
-  const Overlay = useRef(null);
-  const modalRef = useRef(null);
-  const modalBody = useRef(null);
-  const modalFooter = useRef(null);
-  const yesBtn = useRef(null);
   const hamburgerSpan = useRef(null);
   const hamburgerOpenflag = useRef(null);
-  const IndexHeaderValue = useContext(IndexHeaderContext);
+  const IndexHeaderValue = useContext(IndexContainerContext);
   const SignInHeaderValue = useContext(SignInHeaderContext);
   const SignUpHeaderValue = useContext(SignUpHeaderContext);
   const fromAnyWhereHeader = ()=> {
@@ -33,24 +27,18 @@ export default function Header() {
   }
 
   const value = {
-    modalFlag: modalFlag,
-    Overlay: Overlay,
-    modalRef: modalRef,
-    modalBody: modalBody,
-    modalFooter: modalFooter,
-    yesBtn: yesBtn,
     hamburgerOpenflag: hamburgerOpenflag,
     checkSignOut: checkSignOut,
     checkAcountDelete: checkAcountDelete
   }
 
   function checkSignOut() {
-    modalFlag.current.checked = true;
-    yesBtn.current.id = 'check_sign_out';
-    Overlay.current.id = 'check_sign_out_overlay';
-    Overlay.current.style.zIndex = 1;
-    modalBody.current.innerHTML = 'ログアウトしても宜しいですか？';
-    modalRef.current.animate({
+    IndexHeaderValue.modalFlag.current.checked = true;
+    IndexHeaderValue.yesBtn.current.id = 'check_sign_out';
+    IndexHeaderValue.Overlay.current.id = 'check_sign_out_overlay';
+    IndexHeaderValue.Overlay.current.style.zIndex = 1;
+    IndexHeaderValue.modalBody.current.innerHTML = 'ログアウトしても宜しいですか？';
+    IndexHeaderValue.modalRef.current.animate({
       transform: ['translateY(-50px)', 'translateY(0px)'],
       visibility: ['hidden', 'visible'],
       opacity: [0, 1]
@@ -61,12 +49,12 @@ export default function Header() {
   }
 
   function checkAcountDelete() {
-    modalFlag.current.checked = true;
-    yesBtn.current.id = 'delete_acount';
-    Overlay.current.id = 'delete_acount_overlay';
-    Overlay.current.style.zIndex = 1;
-    modalBody.current.innerHTML = 'このアカウントを削除致しますか？';
-    modalRef.current.animate({
+    IndexHeaderValue.modalFlag.current.checked = true;
+    IndexHeaderValue.yesBtn.current.id = 'delete_acount';
+    IndexHeaderValue.Overlay.current.id = 'delete_acount_overlay';
+    IndexHeaderValue.Overlay.current.style.zIndex = 1;
+    IndexHeaderValue.modalBody.current.innerHTML = 'このアカウントを削除致しますか？';
+    IndexHeaderValue.modalRef.current.animate({
       transform: ['translateY(-50px)', 'translateY(0px)'],
       visibility: ['hidden', 'visible'],
       opacity: [0, 1]
@@ -78,12 +66,12 @@ export default function Header() {
 
   function hamburgerOpen() {
     if(hamburgerOpenflag.current.checked == false) {
-      Overlay.current.id = 'hamburger_open_overlay';
-      modalFlag.current.checked = true;
+      IndexHeaderValue.Overlay.current.id = 'hamburger_open_overlay';
+      IndexHeaderValue.modalFlag.current.checked = true;
     }
     else {
-      value.Overlay.current.id = '';
-      modalFlag.current.checked = false;
+      IndexHeaderValue.Overlay.current.id = '';
+      IndexHeaderValue.modalFlag.current.checked = false;
     }
   }
 

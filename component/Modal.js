@@ -1,13 +1,15 @@
 import modalStyles from '../styles/modal.module.css';
 import React, { useRef, useContext, useEffect } from 'react';
 import { HeaderContext } from './Header';
+import { IndexContainerContext } from '../pages/';
 
 export default function Modal() {
-  const value = useContext(HeaderContext);
+  const indexValue = useContext(IndexContainerContext);
+  const headerValue = useContext(HeaderContext);
 
   function overLayClose() {
-    if(value.Overlay.current.id == 'check_sign_out_overlay' || value.Overlay.current.id == 'delete_acount_overlay') {
-      value.modalRef.current.animate({
+    if(indexValue.Overlay.current.id == 'check_sign_out_overlay' || indexValue.Overlay.current.id == 'delete_acount_overlay') {
+      indexValue.modalRef.current.animate({
         transform: ['translateY(0px)', 'translateY(-50px)'],
         visibility: ['visible', 'hidden'],
         opacity: [1, 0]
@@ -15,18 +17,18 @@ export default function Modal() {
         fill: 'forwards',
         duration: 150
       });
-      value.modalFlag.current.checked = false;
-      value.Overlay.current.style.zIndex = 'auto';
-      value.Overlay.current.id = '';
-      value.modalBody.current.innerHTML = '';
-      value.hamburgerOpenflag.current.checked = false;
-      value.yesBtn.current.id = '';
+      indexValue.modalFlag.current.checked = false;
+      indexValue.Overlay.current.style.zIndex = 'auto';
+      indexValue.Overlay.current.id = '';
+      indexValue.modalBody.current.innerHTML = '';
+      headerValue.hamburgerOpenflag.current.checked = false;
+      indexValue.yesBtn.current.id = '';
     }
-    else if(value.Overlay.current.id == 'hamburger_open_overlay') {
-      value.modalFlag.current.checked = false;
-      value.Overlay.current.style.zIndex = 'auto';
-      value.Overlay.current.id = '';
-      value.hamburgerOpenflag.current.checked = false;
+    else if(indexValue.Overlay.current.id == 'hamburger_open_overlay') {
+      indexValue.modalFlag.current.checked = false;
+      indexValue.Overlay.current.style.zIndex = 'auto';
+      indexValue.Overlay.current.id = '';
+      headerValue.hamburgerOpenflag.current.checked = false;
     }
   }
 
@@ -47,13 +49,13 @@ export default function Modal() {
 
   return(
     <>
-      <input type="checkbox" id="hamburger_flag" className={modalStyles.modalFlag} ref={value.modalFlag} />
-      <div className={modalStyles.overlay} ref={value.Overlay} onClick={overLayClose}>
-        <div className={modalStyles.modal} onClick={(e)=> {e.preventDefault(); e.stopPropagation();}} ref={value.modalRef}>
-          <div className={modalStyles.modalBody} ref={value.modalBody}></div>
-          <div className={modalStyles.modalFooter} ref={value.modalFooter}>
+      <input type="checkbox" id="hamburger_flag" className={modalStyles.modalFlag} ref={indexValue.modalFlag} />
+      <div className={modalStyles.overlay} ref={indexValue.Overlay} onClick={overLayClose}>
+        <div className={modalStyles.modal} onClick={(e)=> {e.preventDefault(); e.stopPropagation();}} ref={indexValue.modalRef}>
+          <div className={modalStyles.modalBody} ref={indexValue.modalBody}></div>
+          <div className={modalStyles.modalFooter} ref={indexValue.modalFooter}>
             <div>
-              <button onClick={(e)=> {YesBtn(e, 'yes')}} ref={value.yesBtn}>yes</button>
+              <button onClick={(e)=> {YesBtn(e, 'yes')}} ref={indexValue.yesBtn}>yes</button>
               <button onClick={(e)=> {YesBtn(e, 'no')}}>no</button>
             </div>
           </div>
