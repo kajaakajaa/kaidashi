@@ -40,6 +40,10 @@ export default function Index({data}) {
   const errorPrice = useRef(null);
   const errorNumber = useRef(null);
   const [registItemForm, setRegistItemForm] = useState(false);
+  const errorDuplicate = useRef(null);
+  const modal = {
+    // modalFlag: modalFlag,
+  }
 
   //topボタンの表示・非表示処理の為のdom
   const observerDoms = {
@@ -82,12 +86,25 @@ export default function Index({data}) {
     });
   }
 
-  //新商品登録のフォームエラーcheck
-  function errorCheck() {
-    let errorCount = 0;
+  function resetErrorText() {
     errorItem.current.style.display = '';
     errorPrice.current.style.display = '';
     errorNumber.current.style.display = '';
+    errorDuplicate.current.style.display = '';
+  }
+
+  function resetAll() {
+    Item.current.value = '';
+    Price.current.value = '';
+    itemNumber.current.value = '';
+    resetErrorText();
+  }
+
+  //新商品登録のフォームエラーcheck
+  function errorCheck() {
+    let errorCount = 0;
+    resetErrorText();
+
     if(Item.current.value == '' || Item.current.value == null) {
       errorItem.current.style.display = 'block';
       errorCount++;
@@ -110,7 +127,8 @@ export default function Index({data}) {
         const isSmall = entry.contentRect.width <= 768;
         if(isSmall) {
           registItemBtn.current.type = 'button'; //ipad以下
-          registItemBtn.current.addEventListener('click', ()=> {
+          registItemBtn.current.addEventListener('click', ()=> { //※送信ではなく、modalの表示
+
             if(errorCheck() < 1) {
               console.log('送信成功');
               setRegistItemForm(!registItemForm);
@@ -132,13 +150,14 @@ export default function Index({data}) {
                   headers: {'Content-type': 'application/json'},
                   body: JSON.stringify(query)
                 });
-                setRegistItemForm(!registItemForm);
-                const data = await result.json();
-                if(data['data_from_php'] == 1) {
+                const resultData = await result.json();
+                resetAll();
+                if(resultData['data_from_php'] == 1) {
                   window.location.reload();
                 }
                 else {
-                  console.log('既に登録がありよる！');
+                  resetAll();
+                  errorDuplicate.current.style.display = 'block';
                 }
               })();
             }
@@ -199,7 +218,7 @@ export default function Index({data}) {
       const number = target.nextElementSibling;
       number.stepDown();
     }
-    else if(status == 'Increase') { //ーボタン
+    else if(status == 'Increase') { //ボタン
       const target = e.target;
       const number = target.previousElementSibling;
       number.stepUp();
@@ -239,12 +258,7 @@ export default function Index({data}) {
     }
     
     return()=> {
-      Item.current.value = '';
-      Price.current.value = '';
-      itemNumber.current.value = '';
-      errorItem.current.style.display = '';
-      errorPrice.current.style.display = '';
-      errorNumber.current.style.display = '';
+      resetAll();
     }
   }, [registItemForm]);
 
@@ -282,6 +296,7 @@ export default function Index({data}) {
                     <p className={`${indexStyles.errorMessage} ${indexStyles.errorNumber}`} ref={errorNumber}>※ 個数を入力して下さい。</p>
                   </div>
                 </div>
+                <p ref={errorDuplicate}>※ 既に登録されている商品になります。</p>
                 <div><input type="button" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
               </form>
               <form method="post" action="/" onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>

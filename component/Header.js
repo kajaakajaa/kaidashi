@@ -1,14 +1,14 @@
 import { Link as Scroll } from 'react-scroll';
 import Image from 'next/image';
 import headerStyles from '../styles/header.module.css';
-import React, { useEffect, useRef, useContext, createContext } from 'react';
+import React, { useRef, useContext, createContext } from 'react';
 export const HeaderContext = createContext();
 import { Modal } from './index';
 import { IndexHeaderContext } from '../pages/';
 import { SignInHeaderContext } from '../pages/signIn';
 import { SignUpHeaderContext } from '../pages/signUp';
 
-export default function Header(props) {
+export default function Header() {
   const modalFlag = useRef(null);
   const Overlay = useRef(null);
   const modalRef = useRef(null);
