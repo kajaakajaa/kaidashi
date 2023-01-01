@@ -103,7 +103,7 @@ export default function Header() {
               <Image src="/headerLogo.svg" width={40} height={30} alt="headerロゴ" priority/>
             </a>
           </div>
-          <input type="checkbox" id="hamburger_open" className={headerStyles.hamburgerOpenflag} ref={IndexHeaderValue.hamburgerOpenflag}/>
+          <input type="checkbox" id="hamburger_open" className={headerStyles.hamburgerOpenflag} ref={fromAnyWhereHeader().hamburgerOpenflag}/>
           <div className={headerStyles.signArea} ref={fromAnyWhereHeader().signArea}>
             <div className={headerStyles.signAreaWrapper} onClick={(e)=> {e.preventDefault(); e.stopPropagation();}}>
               <div>

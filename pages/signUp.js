@@ -8,10 +8,12 @@ export const SignUpContainerContext = createContext();
 export default function SignUp() {
   const signArea = useRef(null);
   const hamburgerBtn = useRef(null);
+  const hamburgerOpenFlag = useRef(null);
 
   const value = {
     signArea: signArea,
-    hamburgerBtn: hamburgerBtn
+    hamburgerBtn: hamburgerBtn,
+    hamburgerOpenFlag: hamburgerOpenFlag
   }
 
   return(
