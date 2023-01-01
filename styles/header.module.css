@@ -24,26 +24,26 @@
   width: 100%;
   height: auto;
 }
-.header > input {
+.header .hamburgerOpenflag {
   display: none;
 }
-.header > input:checked ~ .hamburger {
+.header .hamburgerOpenflag:checked ~ .hamburger {
   background: black;
 }
-.header > input:checked ~ .hamburger > span {
+.header .hamburgerOpenflag:checked ~ .hamburger > span {
   background: rgba(0, 0, 0, 0);
 }
-.header > input:checked ~ .hamburger > span::before {
+.header .hamburgerOpenflag:checked ~ .hamburger > span::before {
   background: white;
   bottom: 0;
   transform: rotate(225deg);
 }
-.header > input:checked ~ .hamburger > span::after {
+.header .hamburgerOpenflag:checked ~ .hamburger > span::after {
   background: white;
   top: 0;
   transform: rotate(-225deg);
 }
-.header > input:checked ~ .signArea {
+.header .hamburgerOpenflag:checked ~ .signArea {
   right: 0;
 }
 .header .hamburger {

@@ -9,7 +9,6 @@ import { SignUpContainerContext } from '../pages/signUp';
 
 export default function Header() {
   const hamburgerSpan = useRef(null);
-  const hamburgerOpenflag = useRef(null);
   const IndexHeaderValue = useContext(IndexContainerContext);
   const SignInHeaderValue = useContext(SignInContainerContext);
   const SignUpHeaderValue = useContext(SignUpContainerContext);
@@ -43,7 +42,6 @@ export default function Header() {
   }
 
   const value = {
-    hamburgerOpenflag: hamburgerOpenflag,
     checkSignOut: checkSignOut,
     checkAcountDelete: checkAcountDelete
   }
@@ -81,7 +79,7 @@ export default function Header() {
   }
 
   function hamburgerOpen() {
-    if(hamburgerOpenflag.current.checked == false) {
+    if(IndexHeaderValue.hamburgerOpenflag.current.checked == false) {
       IndexHeaderValue.Overlay.current.id = 'hamburger_open_overlay';
       IndexHeaderValue.modalFlag.current.checked = true;
     }
@@ -105,7 +103,7 @@ export default function Header() {
               <Image src="/headerLogo.svg" width={40} height={30} alt="headerロゴ" priority/>
             </a>
           </div>
-          <input type="checkbox" id="hamburger_open" ref={hamburgerOpenflag}/>
+          <input type="checkbox" id="hamburger_open" className={headerStyles.hamburgerOpenflag} ref={IndexHeaderValue.hamburgerOpenflag}/>
           <div className={headerStyles.signArea} ref={fromAnyWhereHeader().signArea}>
             <div className={headerStyles.signAreaWrapper} onClick={(e)=> {e.preventDefault(); e.stopPropagation();}}>
               <div>
