@@ -1,56 +1,60 @@
-import { Link as Scroll } from 'react-scroll';
 import Image from 'next/image';
 import headerStyles from '../styles/header.module.css';
-import React, { useEffect, useRef, useContext, createContext } from 'react';
+import React, { useRef, useContext, createContext, useState, useEffect } from 'react';
 export const HeaderContext = createContext();
 import { Modal } from './index';
-import { IndexHeaderContext } from '../pages/';
-import { SignInHeaderContext } from '../pages/signIn';
-import { SignUpHeaderContext } from '../pages/signUp';
+import { IndexContainerContext } from '../pages/';
+import { SignInContainerContext } from '../pages/signIn';
+import { SignUpContainerContext } from '../pages/signUp';
 
-export default function Header(props) {
-  const modalFlag = useRef(null);
-  const Overlay = useRef(null);
-  const modalRef = useRef(null);
-  const modalBody = useRef(null);
-  const modalFooter = useRef(null);
-  const yesBtn = useRef(null);
+export default function Header() {
   const hamburgerSpan = useRef(null);
   const hamburgerOpenflag = useRef(null);
-  const IndexHeaderValue = useContext(IndexHeaderContext);
-  const SignInHeaderValue = useContext(SignInHeaderContext);
-  const SignUpHeaderValue = useContext(SignUpHeaderContext);
+  const IndexHeaderValue = useContext(IndexContainerContext);
+  const SignInHeaderValue = useContext(SignInContainerContext);
+  const SignUpHeaderValue = useContext(SignUpContainerContext);
+  const [SignHidden, setSignHidden] = useState(false);
   const fromAnyWhereHeader = ()=> {
     if(IndexHeaderValue) {
-      return IndexHeaderValue;
+      return IndexHeaderValue; //indexのページが呼ばれたら表示
     }
-    else if(SignInHeaderValue) {
+    else if(SignInHeaderValue) { //ログインページが呼ばれたら表示
       return SignInHeaderValue;
     }
-    else if(SignUpHeaderValue) {
+    else if(SignUpHeaderValue) { //新規登録ページが呼ばれたら表示
       return SignUpHeaderValue;
     }
   }
 
+  //モーダルコンポーネントをページによって表示・非表示
+  function modalShowHide() {
+    if(IndexHeaderValue) {
+      return <Modal />
+    }
+  }
+
+  //上記Topにて呼ばれたらModalコンポーネントを返す
+  const signHidden = ()=> {
+    if(SignInHeaderValue || SignUpHeaderValue) {
+      fromAnyWhereHeader().signArea.current.style.display = 'none';
+      fromAnyWhereHeader().hamburgerBtn.current.style.display = 'none';
+      setSignHidden(true);
+    }
+  }
+
   const value = {
-    modalFlag: modalFlag,
-    Overlay: Overlay,
-    modalRef: modalRef,
-    modalBody: modalBody,
-    modalFooter: modalFooter,
-    yesBtn: yesBtn,
     hamburgerOpenflag: hamburgerOpenflag,
     checkSignOut: checkSignOut,
     checkAcountDelete: checkAcountDelete
   }
 
   function checkSignOut() {
-    modalFlag.current.checked = true;
-    yesBtn.current.id = 'check_sign_out';
-    Overlay.current.id = 'check_sign_out_overlay';
-    Overlay.current.style.zIndex = 1;
-    modalBody.current.innerHTML = 'ログアウトしても宜しいですか？';
-    modalRef.current.animate({
+    IndexHeaderValue.modalFlag.current.checked = true;
+    IndexHeaderValue.yesBtn.current.id = 'check_sign_out';
+    IndexHeaderValue.Overlay.current.id = 'check_sign_out_overlay';
+    IndexHeaderValue.Overlay.current.style.zIndex = 1;
+    IndexHeaderValue.modalBody.current.innerHTML = 'ログアウトしても宜しいですか？';
+    IndexHeaderValue.modalRef.current.animate({
       transform: ['translateY(-50px)', 'translateY(0px)'],
       visibility: ['hidden', 'visible'],
       opacity: [0, 1]
@@ -61,12 +65,12 @@ export default function Header(props) {
   }
 
   function checkAcountDelete() {
-    modalFlag.current.checked = true;
-    yesBtn.current.id = 'delete_acount';
-    Overlay.current.id = 'delete_acount_overlay';
-    Overlay.current.style.zIndex = 1;
-    modalBody.current.innerHTML = 'このアカウントを削除致しますか？';
-    modalRef.current.animate({
+    IndexHeaderValue.modalFlag.current.checked = true;
+    IndexHeaderValue.yesBtn.current.id = 'delete_acount';
+    IndexHeaderValue.Overlay.current.id = 'delete_acount_overlay';
+    IndexHeaderValue.Overlay.current.style.zIndex = 1;
+    IndexHeaderValue.modalBody.current.innerHTML = 'このアカウントを削除致しますか？';
+    IndexHeaderValue.modalRef.current.animate({
       transform: ['translateY(-50px)', 'translateY(0px)'],
       visibility: ['hidden', 'visible'],
       opacity: [0, 1]
@@ -78,24 +82,28 @@ export default function Header(props) {
 
   function hamburgerOpen() {
     if(hamburgerOpenflag.current.checked == false) {
-      Overlay.current.id = 'hamburger_open_overlay';
-      modalFlag.current.checked = true;
+      IndexHeaderValue.Overlay.current.id = 'hamburger_open_overlay';
+      IndexHeaderValue.modalFlag.current.checked = true;
     }
     else {
-      value.Overlay.current.id = '';
-      modalFlag.current.checked = false;
+      IndexHeaderValue.Overlay.current.id = '';
+      IndexHeaderValue.modalFlag.current.checked = false;
     }
   }
+
+  useEffect(()=> {
+    signHidden();
+  }, [SignHidden])
 
   return(
     <>
       <HeaderContext.Provider value={value}>
         <header className={headerStyles.header}>
-          <Modal />
+          {modalShowHide()}
           <div className={headerStyles.headerLogoWrapper}>
-            <Scroll to="to" smooth={true} duration={600}>
-              <Image src="/headerLogo.svg" width={40} height={30} alt="topへ戻る" title="topへ戻る" priority/>
-            </Scroll>
+            <a href="">
+              <Image src="/headerLogo.svg" width={40} height={30} alt="headerロゴ" priority/>
+            </a>
           </div>
           <input type="checkbox" id="hamburger_open" ref={hamburgerOpenflag}/>
           <div className={headerStyles.signArea} ref={fromAnyWhereHeader().signArea}>

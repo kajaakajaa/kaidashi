@@ -2,7 +2,7 @@ import Head from 'next/head';
 import indexStyles from '../styles/index.module.css';
 import { Header, Footer } from '../component/index';
 import React, { useEffect, useRef, createRef, createContext, useState } from 'react';
-export const IndexHeaderContext = createContext();
+export const IndexContainerContext = createContext();
 import { Observer } from '../lib/IntersectionObserver';
 import { Link as Scroll } from 'react-scroll';
 
@@ -40,6 +40,14 @@ export default function Index({data}) {
   const errorPrice = useRef(null);
   const errorNumber = useRef(null);
   const [registItemForm, setRegistItemForm] = useState(false);
+  const errorDuplicate = useRef(null);
+  //modal系
+  const modalFlag = useRef(null);
+  const Overlay = useRef(null);
+  const modalRef = useRef(null);
+  const modalBody = useRef(null);
+  const modalFooter = useRef(null);
+  const yesBtn = useRef(null);
 
   //topボタンの表示・非表示処理の為のdom
   const observerDoms = {
@@ -67,7 +75,13 @@ export default function Index({data}) {
   const value = {
     signArea: signArea,
     hamburgerClose: hamburgerClose,
-    hamburgerBtn: hamburgerBtn
+    hamburgerBtn: hamburgerBtn,
+    modalFlag: modalFlag,
+    Overlay: Overlay,
+    modalRef: modalRef,
+    modalBody: modalBody,
+    modalFooter: modalFooter,
+    yesBtn: yesBtn,
   }
 
   //ログアウト・退会エリアの表示
@@ -82,12 +96,25 @@ export default function Index({data}) {
     });
   }
 
-  //新商品登録のフォームエラーcheck
-  function errorCheck() {
-    let errorCount = 0;
+  function resetErrorText() {
     errorItem.current.style.display = '';
     errorPrice.current.style.display = '';
     errorNumber.current.style.display = '';
+    errorDuplicate.current.style.display = '';
+  }
+
+  function resetAll() {
+    Item.current.value = '';
+    Price.current.value = '';
+    itemNumber.current.value = '';
+    resetErrorText();
+  }
+
+  //新商品登録のフォームエラーcheck
+  function errorCheck() {
+    let errorCount = 0;
+    resetErrorText();
+
     if(Item.current.value == '' || Item.current.value == null) {
       errorItem.current.style.display = 'block';
       errorCount++;
@@ -110,7 +137,8 @@ export default function Index({data}) {
         const isSmall = entry.contentRect.width <= 768;
         if(isSmall) {
           registItemBtn.current.type = 'button'; //ipad以下
-          registItemBtn.current.addEventListener('click', ()=> {
+          registItemBtn.current.addEventListener('click', ()=> { //※送信ではなく、modalの表示
+
             if(errorCheck() < 1) {
               console.log('送信成功');
               setRegistItemForm(!registItemForm);
@@ -132,13 +160,14 @@ export default function Index({data}) {
                   headers: {'Content-type': 'application/json'},
                   body: JSON.stringify(query)
                 });
-                setRegistItemForm(!registItemForm);
-                const data = await result.json();
-                if(data['data_from_php'] == 1) {
+                const resultData = await result.json();
+                resetAll();
+                if(resultData['data_from_php'] == 1) {
                   window.location.reload();
                 }
                 else {
-                  console.log('既に登録がありよる！');
+                  resetAll();
+                  errorDuplicate.current.style.display = 'block';
                 }
               })();
             }
@@ -199,7 +228,7 @@ export default function Index({data}) {
       const number = target.nextElementSibling;
       number.stepDown();
     }
-    else if(status == 'Increase') { //ーボタン
+    else if(status == 'Increase') { //ボタン
       const target = e.target;
       const number = target.previousElementSibling;
       number.stepUp();
@@ -239,12 +268,7 @@ export default function Index({data}) {
     }
     
     return()=> {
-      Item.current.value = '';
-      Price.current.value = '';
-      itemNumber.current.value = '';
-      errorItem.current.style.display = '';
-      errorPrice.current.style.display = '';
-      errorNumber.current.style.display = '';
+      resetAll();
     }
   }, [registItemForm]);
 
@@ -258,44 +282,45 @@ export default function Index({data}) {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <div className={indexStyles.container} id="top">
-          <IndexHeaderContext.Provider value={value}>
+          <IndexContainerContext.Provider value={value}>
             <Header />
-          </IndexHeaderContext.Provider>
-          <main className={indexStyles.main} ref={Main}>
-            <div className={indexStyles.observeTarget} ref={observeTarget}></div> 
-            <div className={indexStyles.mainWrapper}>
-              <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault();}}>
-                <div>
+            <main className={indexStyles.main} ref={Main}>
+              <div className={indexStyles.observeTarget} ref={observeTarget}></div> 
+              <div className={indexStyles.mainWrapper}>
+                <form className={indexStyles.registItem} onSubmit={(e)=> {e.preventDefault();}}>
                   <div>
-                    <label htmlFor="item_name">品名</label>
-                    <input type="text" name="item_name" id="item_name" ref={Item} />
-                    <p className={`${indexStyles.errorMessage} ${indexStyles.errorItem}`} ref={errorItem}>※ 品名を入力して下さい。</p>
+                    <div>
+                      <label htmlFor="item_name">品名</label>
+                      <input type="text" name="item_name" id="item_name" ref={Item} />
+                      <p className={`${indexStyles.errorMessage} ${indexStyles.errorItem}`} ref={errorItem}>※ 品名を入力して下さい。</p>
+                    </div>
+                    <div>
+                      <label htmlFor="price">価格</label>
+                      <input type="number" min="0" name="price" id="price" ref={Price} />
+                      <p className={`${indexStyles.errorMessage} ${indexStyles.errorPrice}`} ref={errorPrice}>※ 価格を入力して下さい。</p>
+                    </div>
+                    <div>
+                      <label htmlFor="regist_item_number">個数</label>
+                      <input type="number" min="0" name="regist_item_number" id="regist_item_number" ref={itemNumber} />
+                      <p className={`${indexStyles.errorMessage} ${indexStyles.errorNumber}`} ref={errorNumber}>※ 個数を入力して下さい。</p>
+                    </div>
                   </div>
-                  <div>
-                    <label htmlFor="price">価格</label>
-                    <input type="number" min="0" name="price" id="price" ref={Price} />
-                    <p className={`${indexStyles.errorMessage} ${indexStyles.errorPrice}`} ref={errorPrice}>※ 価格を入力して下さい。</p>
-                  </div>
-                  <div>
-                    <label htmlFor="regist_item_number">個数</label>
-                    <input type="number" min="0" name="regist_item_number" id="regist_item_number" ref={itemNumber} />
-                    <p className={`${indexStyles.errorMessage} ${indexStyles.errorNumber}`} ref={errorNumber}>※ 個数を入力して下さい。</p>
-                  </div>
+                  <p ref={errorDuplicate}>※ 既に登録されている商品になります。</p>
+                  <div><input type="button" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
+                </form>
+                <form method="post" action="/" onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>
+                  <ul>
+                    {itemList} {/*動的なレイアウトは上記で定義*/}
+                  </ul>
+                </form>
+                <input type="submit" form="item_update" value="更新" className={indexStyles.updateBtn} />
+                <div className={indexStyles.toTopWrapper} ref={toTop} alt="topへ戻る" title="topへ戻る">
+                  <Scroll to="top" smooth={true} duration={600}></Scroll>
                 </div>
-                <div><input type="button" value="新規商品登録" className={indexStyles.registItemBtn} ref={registItemBtn} /></div>
-              </form>
-              <form method="post" action="/" onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>
-                <ul>
-                  {itemList} {/*動的なレイアウトは上記で定義*/}
-                </ul>
-              </form>
-              <input type="submit" form="item_update" value="更新" className={indexStyles.updateBtn} />
-              <div className={indexStyles.toTopWrapper} ref={toTop} alt="topへ戻る" title="topへ戻る">
-                <Scroll to="top" smooth={true} duration={600}></Scroll>
               </div>
-            </div>
-          </main>
-          <Footer />
+            </main>
+            <Footer />
+          </IndexContainerContext.Provider>
         </div>
       </>
     )

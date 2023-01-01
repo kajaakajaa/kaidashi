@@ -1,0 +1,11 @@
+.container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  background: #FFD700;
+
+  main {
+    grid-row: 2;
+    margin-top: 130px;
+  }
+}

@@ -1,15 +1,17 @@
 import Head from 'next/head';
-import signStyles from '../styles/sign.module.css';
-import { Header } from '../component/index';
+import signInStyles from '../styles/signIn.module.css';
+import { Header, Footer } from '../component/index';
 import Link from 'next/link';
 import React, { useRef, createContext } from 'react';
-export const SignInHeaderContext = createContext();
+export const SignInContainerContext = createContext();
 
 export default function SignIn() {
   const signArea = useRef(null);
+  const hamburgerBtn = useRef(null);
 
   const value = {
-    signArea: signArea
+    signArea: signArea,
+    hamburgerBtn: hamburgerBtn
   }
 
   return(
@@ -20,33 +22,34 @@ export default function SignIn() {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SignInHeaderContext.Provider value={value}>
-        <Header />
-      </SignInHeaderContext.Provider>
-      <main>
-        <div className={signStyles.container} id="top">
-          <div className={signStyles.signInWrapper}>
-            <form className={signStyles.inputForm} onSubmit={(e)=> {e.preventDefault()}}>
+      <SignInContainerContext.Provider value={value}>
+        <div className={signInStyles.container} id="top">
+          <Header />
+          <main>
+            <div className={signInStyles.signInWrapper}>
+              <form className={signInStyles.inputForm} onSubmit={(e)=> {e.preventDefault()}}>
+                <div>
+                  <label htmlFor="mail">メール:</label>
+                  <input type="text" name="text" id="mail" />
+                </div>
+                <div>
+                  <label htmlFor="password">パスワード:</label>
+                  <input type="password" name="password" id="password" />
+                </div>
+                <div><input type="submit" value="ログイン" /></div>
+              </form>
               <div>
-                <label htmlFor="mail">メール:</label>
-                <input type="text" name="text" id="mail" />
+                <div className={signInStyles.keepSignIn}>
+                  <input type="checkbox" name="keepSignIn" id="keepSignIn" />
+                  <label htmlFor="keepSignIn">:ログインを維持する</label>
+                </div>
+                <div><Link href="./signUp">新規登録</Link></div>
               </div>
-              <div>
-                <label htmlFor="password">パスワード:</label>
-                <input type="password" name="password" id="password" />
-              </div>
-              <div><input type="submit" value="ログイン" /></div>
-            </form>
-            <div>
-              <div className={signStyles.keepSignIn}>
-                <input type="checkbox" name="keepSignIn" id="keepSignIn" />
-                <label htmlFor="keepSignIn">:ログインを維持する</label>
-              </div>
-              <div><Link href="./signUp">新規登録</Link></div>
             </div>
-          </div>
+          </main>
+          <Footer />
         </div>
-      </main>
+      </SignInContainerContext.Provider>
     </>
   )
 }
