@@ -18,6 +18,7 @@
 }
 .header .headerLogoWrapper > a {
   width: 130px;
+  pointer-events: none;
 }
 .header .headerLogoWrapper > a img {
   width: 100%;

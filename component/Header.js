@@ -1,28 +1,44 @@
-import { Link as Scroll } from 'react-scroll';
 import Image from 'next/image';
 import headerStyles from '../styles/header.module.css';
-import React, { useRef, useContext, createContext } from 'react';
+import React, { useRef, useContext, createContext, useState, useEffect } from 'react';
 export const HeaderContext = createContext();
 import { Modal } from './index';
 import { IndexContainerContext } from '../pages/';
-import { SignInHeaderContext } from '../pages/signIn';
-import { SignUpHeaderContext } from '../pages/signUp';
+import { SignInContainerContext } from '../pages/signIn';
+import { SignUpContainerContext } from '../pages/signUp';
 
 export default function Header() {
   const hamburgerSpan = useRef(null);
   const hamburgerOpenflag = useRef(null);
   const IndexHeaderValue = useContext(IndexContainerContext);
-  const SignInHeaderValue = useContext(SignInHeaderContext);
-  const SignUpHeaderValue = useContext(SignUpHeaderContext);
+  const SignInHeaderValue = useContext(SignInContainerContext);
+  const SignUpHeaderValue = useContext(SignUpContainerContext);
+  const [SignHidden, setSignHidden] = useState(false);
   const fromAnyWhereHeader = ()=> {
     if(IndexHeaderValue) {
-      return IndexHeaderValue;
+      return IndexHeaderValue; //indexのページが呼ばれたら表示
     }
-    else if(SignInHeaderValue) {
+    else if(SignInHeaderValue) { //ログインページが呼ばれたら表示
       return SignInHeaderValue;
     }
-    else if(SignUpHeaderValue) {
+    else if(SignUpHeaderValue) { //新規登録ページが呼ばれたら表示
       return SignUpHeaderValue;
+    }
+  }
+
+  //モーダルコンポーネントをページによって表示・非表示
+  function modalShowHide() {
+    if(IndexHeaderValue) {
+      return <Modal />
+    }
+  }
+
+  //上記Topにて呼ばれたらModalコンポーネントを返す
+  const signHidden = ()=> {
+    if(SignInHeaderValue || SignUpHeaderValue) {
+      fromAnyWhereHeader().signArea.current.style.display = 'none';
+      fromAnyWhereHeader().hamburgerBtn.current.style.display = 'none';
+      setSignHidden(true);
     }
   }
 
@@ -75,15 +91,19 @@ export default function Header() {
     }
   }
 
+  useEffect(()=> {
+    signHidden();
+  }, [SignHidden])
+
   return(
     <>
       <HeaderContext.Provider value={value}>
         <header className={headerStyles.header}>
-          <Modal />
+          {modalShowHide()}
           <div className={headerStyles.headerLogoWrapper}>
-            <Scroll to="to" smooth={true} duration={600}>
-              <Image src="/headerLogo.svg" width={40} height={30} alt="topへ戻る" title="topへ戻る" priority/>
-            </Scroll>
+            <a href="">
+              <Image src="/headerLogo.svg" width={40} height={30} alt="headerロゴ" priority/>
+            </a>
           </div>
           <input type="checkbox" id="hamburger_open" ref={hamburgerOpenflag}/>
           <div className={headerStyles.signArea} ref={fromAnyWhereHeader().signArea}>

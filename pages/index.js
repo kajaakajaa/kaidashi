@@ -255,7 +255,6 @@ export default function Index({data}) {
 
   useEffect(()=> {
     if(data['user_id'] == 1) {
-      console.log(Overlay.current);
       //個数をデータベースより反映表示
       data['dataProps'].forEach((item, index)=> {
         updateItemNumberRefs.current[index].current.value = item['number'];
