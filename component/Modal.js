@@ -1,11 +1,10 @@
 import modalStyles from '../styles/modal.module.css';
 import React, { useRef, useContext, useEffect } from 'react';
-import { HeaderContext } from './Header';
 import { IndexContainerContext } from '../pages/';
+import { RegistItemResponsive } from '../component/index';
 
 export default function Modal() {
   const indexValue = useContext(IndexContainerContext);
-  const headerValue = useContext(HeaderContext);
 
   function overLayClose() {
     if(indexValue.Overlay.current.id == 'check_sign_out_overlay' || indexValue.Overlay.current.id == 'delete_acount_overlay') {
@@ -21,14 +20,35 @@ export default function Modal() {
       indexValue.Overlay.current.style.zIndex = 'auto';
       indexValue.Overlay.current.id = '';
       indexValue.modalBody.current.innerHTML = '';
-      headerValue.hamburgerOpenflag.current.checked = false;
+      indexValue.hamburgerOpenflag.current.checked = false;
       indexValue.yesBtn.current.id = '';
     }
     else if(indexValue.Overlay.current.id == 'hamburger_open_overlay') {
       indexValue.modalFlag.current.checked = false;
       indexValue.Overlay.current.style.zIndex = 'auto';
       indexValue.Overlay.current.id = '';
-      headerValue.hamburgerOpenflag.current.checked = false;
+      indexValue.hamburgerOpenflag.current.checked = false;
+    }
+    else if(indexValue.Overlay.current.id == 'check_registBtn_responsive_overlay') {
+      indexValue.modalFlag.current.checked = false; //overlay表示
+      indexValue.Overlay.current.id = '';
+      //レスポンシブの新規商品登録フォームの非表示
+      indexValue.RegistItemResponsiveWrapper.current.animate({
+        opacity: [1, 0],
+        transform: ['translateY(0)', 'translateY(-50px)']
+      }, {
+        fill: 'forwards',
+        duration: 150
+      });
+      
+      setTimeout(()=> {
+        indexValue.RegistItemResponsiveWrapper.current.style.display = 'none';
+        Object.assign(indexValue.Overlay.current.style, {
+          zIndex: 'auto',
+          display: 'flex'
+        });
+      }, 100);
+
     }
   }
 
@@ -48,9 +68,10 @@ export default function Modal() {
   }
 
   return(
-    <>
+    <>{/* ↓ ref=modalFLag → overlay表示フラグ*/}
       <input type="checkbox" id="hamburger_flag" className={modalStyles.modalFlag} ref={indexValue.modalFlag} />
       <div className={modalStyles.overlay} ref={indexValue.Overlay} onClick={overLayClose}>
+        <RegistItemResponsive />
         <div className={modalStyles.modal} onClick={(e)=> {e.preventDefault(); e.stopPropagation();}} ref={indexValue.modalRef}>
           <div className={modalStyles.modalBody} ref={indexValue.modalBody}></div>
           <div className={modalStyles.modalFooter} ref={indexValue.modalFooter}>

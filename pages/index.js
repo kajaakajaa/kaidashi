@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import indexStyles from '../styles/index.module.css';
-import { Header, Footer } from '../component/index';
+import { Header, Footer, RegistItemResponsive } from '../component/index';
 import React, { useEffect, useRef, createRef, createContext, useState } from 'react';
 export const IndexContainerContext = createContext();
 import { Observer } from '../lib/IntersectionObserver';
@@ -48,6 +48,12 @@ export default function Index({data}) {
   const modalBody = useRef(null);
   const modalFooter = useRef(null);
   const yesBtn = useRef(null);
+  const hamburgerOpenflag = useRef(null);
+  const RegistItemResponsiveWrapper = useRef(null);
+  const ItemResponsive = useRef(null);
+  const PriceResponsive = useRef(null);
+  const RegistNumberResponsive = useRef(null);
+  const RegistItemBtnResponsive = useRef(null);
 
   //topボタンの表示・非表示処理の為のdom
   const observerDoms = {
@@ -82,6 +88,12 @@ export default function Index({data}) {
     modalBody: modalBody,
     modalFooter: modalFooter,
     yesBtn: yesBtn,
+    hamburgerOpenflag: hamburgerOpenflag,
+    RegistItemResponsiveWrapper: RegistItemResponsiveWrapper,
+    ItemResponsive: ItemResponsive,
+    PriceResponsive: PriceResponsive,
+    RegistNumberResponsive: RegistNumberResponsive,
+    RegistItemBtnResponsive: RegistItemBtnResponsive
   }
 
   //ログアウト・退会エリアの表示
@@ -138,11 +150,26 @@ export default function Index({data}) {
         if(isSmall) {
           registItemBtn.current.type = 'button'; //ipad以下
           registItemBtn.current.addEventListener('click', ()=> { //※送信ではなく、modalの表示
-
-            if(errorCheck() < 1) {
-              console.log('送信成功');
-              setRegistItemForm(!registItemForm);
-            }
+            modalFlag.current.checked = true; //overlay表示
+            Overlay.current.id = 'check_registBtn_responsive_overlay';
+            Object.assign(Overlay.current.style, {
+              zIndex: 1,
+              display: 'block'
+            });
+            //レスポンシブの新規商品登録フォームの表示
+            RegistItemResponsiveWrapper.current.style.display = 'block';
+            RegistItemResponsiveWrapper.current.animate({
+              opacity: [0, 1],
+              transform: ['translateY(-20px)', 'translateY(0)']
+            }, {
+              fill: 'forwards',
+              duration: 150
+            });
+            // Overlay.current.innerHTML = <RegistItemResponsive />;
+            // if(errorCheck() == 1) {
+            //   console.log('送信成功');
+            //   setRegistItemForm(!registItemForm);
+            // }
           });
         }
         else {

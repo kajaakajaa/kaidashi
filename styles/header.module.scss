@@ -27,7 +27,7 @@
     }
   }
 
-  & > input {
+  .hamburgerOpenflag {
     display: none;
 
     &:checked ~ {
