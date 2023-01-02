@@ -207,7 +207,8 @@ export default function Index({data}) {
                     body: JSON.stringify(query)
                   });
                   const result = await response.json();
-                  if(result['data_from_php'] <= 1) {
+                  console.log(result['data_from_php']);
+                  if(result['data_from_php'] == 1) {
                     window.location.reload();
                   }
                   else {
@@ -245,7 +246,7 @@ export default function Index({data}) {
                 });
                 const result = await response.json();
                 resetAll();
-                if(result['data_from_php'] <= 1) {
+                if(result['data_from_php'] == 1) {
                   window.location.reload();
                 }
                 else {
