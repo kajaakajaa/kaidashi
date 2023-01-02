@@ -9,13 +9,13 @@ import { Link as Scroll } from 'react-scroll';
 export async function getServerSideProps() {
   let query = {};
       query['user_id'] = 1;
-  const result = await fetch('https://kajaaserver.com/kaidashi_php/sql_data.php?mode=set_list_data', {
+  const response = await fetch('https://kajaaserver.com/kaidashi_php/sql_data.php?mode=set_list_data', {
     method: 'POST',
     body: JSON.stringify(query)
   });
 
   let data = {};
-  data['dataProps'] = await result.json();
+  data['dataProps'] = await response.json();
   data['user_id'] = 1; // 仮
   return{
     props: {data}
@@ -52,8 +52,12 @@ export default function Index({data}) {
   const RegistItemResponsiveWrapper = useRef(null);
   const ItemResponsive = useRef(null);
   const PriceResponsive = useRef(null);
-  const RegistNumberResponsive = useRef(null);
+  const itemNumberResponsive = useRef(null);
   const RegistItemBtnResponsive = useRef(null);
+  const errorItemResponsive = useRef(null);
+  const errorPriceResponsive = useRef(null);
+  const errorNumberResponsive = useRef(null);
+  const errorDuplicateResponsive = useRef(null);
 
   //topボタンの表示・非表示処理の為のdom
   const observerDoms = {
@@ -92,8 +96,12 @@ export default function Index({data}) {
     RegistItemResponsiveWrapper: RegistItemResponsiveWrapper,
     ItemResponsive: ItemResponsive,
     PriceResponsive: PriceResponsive,
-    RegistNumberResponsive: RegistNumberResponsive,
-    RegistItemBtnResponsive: RegistItemBtnResponsive
+    itemNumberResponsive: itemNumberResponsive,
+    RegistItemBtnResponsive: RegistItemBtnResponsive,
+    errorItemResponsive: errorItemResponsive,
+    errorPriceResponsive: errorPriceResponsive,
+    errorNumberResponsive: errorNumberResponsive,
+    errorDuplicateResponsive: errorDuplicateResponsive
   }
 
   //ログアウト・退会エリアの表示
@@ -109,34 +117,45 @@ export default function Index({data}) {
   }
 
   function resetErrorText() {
+    //pc
     errorItem.current.style.display = '';
     errorPrice.current.style.display = '';
     errorNumber.current.style.display = '';
     errorDuplicate.current.style.display = '';
+    //ipad
+    errorItemResponsive.current.style.display = '';
+    errorPriceResponsive.current.style.display = '';
+    errorNumberResponsive.current.style.display = '';
+    errorDuplicateResponsive.current.style.display = '';
   }
 
   function resetAll() {
+    //pc
     Item.current.value = '';
     Price.current.value = '';
     itemNumber.current.value = '';
+    //ipad
+    ItemResponsive.current.value = '';
+    PriceResponsive.current.value = '';
+    itemNumberResponsive.current.value = '';
     resetErrorText();
   }
 
   //新商品登録のフォームエラーcheck
-  function errorCheck() {
+  function errorCheck(errorValue) {
     let errorCount = 0;
     resetErrorText();
 
-    if(Item.current.value == '' || Item.current.value == null) {
-      errorItem.current.style.display = 'block';
+    if(errorValue.Item.current.value == '' || errorValue.Item.current.value == null) {
+      errorValue.errorItem.current.style.display = 'block';
       errorCount++;
     }
-    if(Price.current.value == '' || Price.current.value == null) {
-      errorPrice.current.style.display = 'block';
+    if(errorValue.Price.current.value == '' || errorValue.Price.current.value == null) {
+      errorValue.errorPrice.current.style.display = 'block';
       errorCount++;
     }
-    if(itemNumber.current.value == '' || itemNumber.current.value == null) {
-      errorNumber.current.style.display = 'block';
+    if(errorValue.itemNumber.current.value == '' || errorValue.itemNumber.current.value == null) {
+      errorValue.errorNumber.current.style.display = 'block';
       errorCount++;
     }
     return errorCount;
@@ -165,31 +184,68 @@ export default function Index({data}) {
               fill: 'forwards',
               duration: 150
             });
-            // Overlay.current.innerHTML = <RegistItemResponsive />;
-            // if(errorCheck() == 1) {
-            //   console.log('送信成功');
-            //   setRegistItemForm(!registItemForm);
-            // }
+            //登録ボタン
+            RegistItemBtnResponsive.current.addEventListener('click', ()=> {
+              const errorValue = {
+                Item: ItemResponsive,
+                Price: PriceResponsive,
+                itemNumber: itemNumberResponsive,
+                errorItem: errorItemResponsive,
+                errorPrice: errorPriceResponsive,
+                errorNumber: errorNumberResponsive
+              }
+              if(errorCheck(errorValue) == 0) {
+                let query = {};
+                    query['user_id'] = data['user_id'];
+                    query['item_name'] = ItemResponsive.current.value;
+                    query['price'] = PriceResponsive.current.value;
+                    query['number'] = itemNumberResponsive.current.value;
+                (async()=> {
+                  const response = await fetch('/api/request?mode=regist_item', {
+                    method: 'POST',
+                    headers: {'Content-type': 'application/json'},
+                    body: JSON.stringify(query)
+                  });
+                  const result = await response.json();
+                  if(result['data_from_php'] <= 1) {
+                    window.location.reload();
+                  }
+                  else {
+                    resetAll();
+                    errorDuplicateResponsive.current.style.display = 'block';
+                  }
+                })();
+                setRegistItemForm(!registItemForm);
+              }
+            });
           });
         }
         else {
           registItemBtn.current.type = 'submit'; //pc以上
           registItemBtn.current.addEventListener('click', ()=> {
-            if(errorCheck() == 0) {
+            const errorValue = {
+              Item: Item,
+              Price: Price,
+              itemNumber: itemNumber,
+              errorItem: errorItem,
+              errorPrice: errorPrice,
+              errorNumber: errorNumber
+            }
+            if(errorCheck(errorValue) == 0) {
               let query = {};
                   query['user_id'] = data['user_id'];
                   query['item_name'] = Item.current.value;
                   query['price'] = Price.current.value;
                   query['number'] = itemNumber.current.value;
               (async()=> {
-                const result = await fetch('/api/request?mode=regist_item', {
+                const response = await fetch('/api/request?mode=regist_item', {
                   method: 'POST',
                   headers: {'Content-type': 'application/json'},
                   body: JSON.stringify(query)
                 });
-                const resultData = await result.json();
+                const result = await response.json();
                 resetAll();
-                if(resultData['data_from_php'] == 1) {
+                if(result['data_from_php'] <= 1) {
                   window.location.reload();
                 }
                 else {
