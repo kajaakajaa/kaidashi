@@ -32,10 +32,14 @@
   background: beige;
   padding: 5%;
 }
+@media (max-width: 767px) {
+  .overlay .RegistItemResponsiveWrapper {
+    height: 60%;
+  }
+}
 @media (max-width: 576px) {
   .overlay .RegistItemResponsiveWrapper {
     width: 90%;
-    height: 55%;
   }
 }
 .overlay .RegistItemResponsiveWrapper > div {
@@ -53,6 +57,7 @@
   border: solid 0.5px;
   border-radius: 5px;
   padding: 0.5rem 1rem;
+  outline-color: cadetblue;
 }
 .overlay .RegistItemResponsiveWrapper > div input[type=submit] {
   padding: 1rem;
@@ -64,6 +69,11 @@
   color: white;
   margin-top: 1rem;
   cursor: pointer;
+}
+.overlay .RegistItemResponsiveWrapper .errorMessage {
+  display: none;
+  color: red;
+  margin: 0;
 }
 .overlay .modal {
   width: 60%;

@@ -34,9 +34,11 @@
     border-radius: 5px;
     background: beige;
     padding: 5%;
+    @media(max-width: 767px) {
+      height: 60%;
+    }
     @media(max-width: 576px) {
       width: 90%;
-      height: 55%;
     }
 
     & > div {
@@ -55,6 +57,7 @@
         border: solid .5px;
         border-radius: 5px;
         padding: .5rem 1rem;
+        outline-color: cadetblue;
       }
       
       input[type="submit"] {
@@ -68,6 +71,12 @@
         margin-top: 1rem;
         cursor: pointer;
       }
+    }
+
+    .errorMessage {
+      display: none;
+      color: red;
+      margin: 0;
     }
   }
 
