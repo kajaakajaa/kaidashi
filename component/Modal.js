@@ -48,7 +48,8 @@ export default function Modal() {
           display: 'flex'
         });
       }, 100);
-
+      indexValue.resetAll();
+      console.log(indexValue.resetAll);
     }
   }
 

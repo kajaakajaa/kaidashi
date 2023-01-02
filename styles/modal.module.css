@@ -39,6 +39,7 @@
 }
 @media (max-width: 576px) {
   .overlay .RegistItemResponsiveWrapper {
+    height: 70%;
     width: 90%;
   }
 }
