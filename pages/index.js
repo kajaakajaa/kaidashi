@@ -101,7 +101,8 @@ export default function Index({data}) {
     errorItemResponsive: errorItemResponsive,
     errorPriceResponsive: errorPriceResponsive,
     errorNumberResponsive: errorNumberResponsive,
-    errorDuplicateResponsive: errorDuplicateResponsive
+    errorDuplicateResponsive: errorDuplicateResponsive,
+    resetAll: resetAll
   }
 
   //ログアウト・退会エリアの表示
@@ -118,15 +119,15 @@ export default function Index({data}) {
 
   function resetErrorText() {
     //pc
-    errorItem.current.style.display = '';
-    errorPrice.current.style.display = '';
-    errorNumber.current.style.display = '';
-    errorDuplicate.current.style.display = '';
+    errorItem.current.style.display = 'none';
+    errorPrice.current.style.display = 'none';
+    errorNumber.current.style.display = 'none';
+    errorDuplicate.current.style.display = 'none';
     //ipad
-    errorItemResponsive.current.style.display = '';
-    errorPriceResponsive.current.style.display = '';
-    errorNumberResponsive.current.style.display = '';
-    errorDuplicateResponsive.current.style.display = '';
+    errorItemResponsive.current.style.display = 'none';
+    errorPriceResponsive.current.style.display = 'none';
+    errorNumberResponsive.current.style.display = 'none';
+    errorDuplicateResponsive.current.style.display = 'none';
   }
 
   function resetAll() {
@@ -207,16 +208,18 @@ export default function Index({data}) {
                     body: JSON.stringify(query)
                   });
                   const result = await response.json();
-                  console.log(result['data_from_php']);
-                  if(result['data_from_php'] == 1) {
-                    window.location.reload();
+                  resetAll();
+                  if(result['regist_data_from_php'] == 1) {
+                    console.log(result['regist_data_from_php']);
+                    // window.location.reload();
+                    setRegistItemForm(!registItemForm);
                   }
-                  else {
-                    resetAll();
+                  else if(result['regist_data_from_php'] == 0) {
+                    console.log(result['regist_data_from_php']);
                     errorDuplicateResponsive.current.style.display = 'block';
                   }
                 })();
-                setRegistItemForm(!registItemForm);
+                // setRegistItemForm(!registItemForm);
               }
             });
           });
@@ -246,11 +249,13 @@ export default function Index({data}) {
                 });
                 const result = await response.json();
                 resetAll();
-                if(result['data_from_php'] == 1) {
-                  window.location.reload();
+                if(result['regist_data_from_php'] == 1) {
+                  console.log(result['regist_data_from_php']);
+                  // window.location.reload();
+                  setRegistItemForm(!registItemForm);
                 }
                 else {
-                  resetAll();
+                  console.log(result['regist_data_from_php']);
                   errorDuplicate.current.style.display = 'block';
                 }
               })();
@@ -277,33 +282,6 @@ export default function Index({data}) {
       })
     });
   }
-
-  //※jsxに挿入する要素は関数ではなく、変数であることに注意。
-  const itemList = data['dataProps'].map((item, index)=> {
-    if(data['dataProps'].length >= 1) {
-      let statusFlag = item['purchase_status'] == 0 ? false : true;
-      let purchase_status = statusFlag == false ? <span ref={purchaseStatusBtnRefs.current[index]} style={{backgroundColor: '#00187C'}}>済</span> : <span ref={purchaseStatusBtnRefs.current[index]} style={{backgroundColor: '#9F0000'}}>未</span>;
-      return(
-        <li key={index} className={indexStyles.itemIndex}>
-          <div><span>{item['item_name']}</span></div>
-          <div>{item['price']} 円</div>
-          <div className={indexStyles.Spinner}>
-            <div className={indexStyles.spinnerWrapper}>
-              <span className={indexStyles.spinnerDown} onClick={(e)=> {spinnerUpDown(e, 'Decrease')}}></span>
-              <input type="number" min="0" name="update_item_number" step="1" id={'update_item_number'+ index} ref={updateItemNumberRefs.current[index]} />
-              <span className={indexStyles.spinnerUp} onClick={(e)=> {spinnerUpDown(e, 'Increase')}}></span>
-              <span>&nbsp;個</span>
-            </div>
-          </div>
-          <div>
-            <input type="checkbox" name="status_flag" id={"status_flag" + index} ref={purchaseStatusFlagRefs.current[index]} defaultChecked={statusFlag} />
-            <label htmlFor={"status_flag" + index}>{purchase_status}</label>
-          </div>
-          <div ref={itemDeleteBtnRefs.current[index]}><span>削除</span></div>
-        </li>
-      )
-    }
-  });
 
   //増減ボタン
   function spinnerUpDown(e, status) {
@@ -337,8 +315,52 @@ export default function Index({data}) {
     });
   }
 
+  //※jsxに挿入する要素は関数ではなく、変数であることに注意。
+  function itemList() {
+    // const result = setListData();
+    return data['dataProps'].map((item, index)=> {
+      if(data['dataProps'].length >= 1) {
+        let statusFlag = item['purchase_status'] == 0 ? false : true;
+        let purchase_status = statusFlag == false ? <span ref={purchaseStatusBtnRefs.current[index]} style={{backgroundColor: '#00187C'}}>済</span> : <span ref={purchaseStatusBtnRefs.current[index]} style={{backgroundColor: '#9F0000'}}>未</span>;
+        return(
+          <li key={index} className={indexStyles.itemIndex}>
+            <div><span>{item['item_name']}</span></div>
+            <div>{item['price']} 円</div>
+            <div className={indexStyles.Spinner}>
+              <div className={indexStyles.spinnerWrapper}>
+                <span className={indexStyles.spinnerDown} onClick={(e)=> {spinnerUpDown(e, 'Decrease')}}></span>
+                <input type="number" min="0" name="update_item_number" step="1" id={'update_item_number'+ index} ref={updateItemNumberRefs.current[index]} />
+                <span className={indexStyles.spinnerUp} onClick={(e)=> {spinnerUpDown(e, 'Increase')}}></span>
+                <span>&nbsp;個</span>
+              </div>
+            </div>
+            <div>
+              <input type="checkbox" name="status_flag" id={"status_flag" + index} ref={purchaseStatusFlagRefs.current[index]} defaultChecked={statusFlag} />
+              <label htmlFor={"status_flag" + index}>{purchase_status}</label>
+            </div>
+            <div ref={itemDeleteBtnRefs.current[index]}><span>削除</span></div>
+          </li>
+        )
+      }
+    });
+  }
+
+  async function setListData() {
+    let query = {};
+    query['user_id'] = data['user_id'];
+    const response = await fetch('/api/request?mode=set_list_data', {
+      method: 'POST',
+      body: JSON.stringify(query),
+      headers: {'Content-type': 'application/json'}
+    });
+    const result = await response.json();
+    console.log(result);
+    return result;
+  }
+
   useEffect(()=> {
     if(data['user_id'] == 1) {
+      setListData();
       //個数をデータベースより反映表示
       data['dataProps'].forEach((item, index)=> {
         updateItemNumberRefs.current[index].current.value = item['number'];
@@ -394,7 +416,7 @@ export default function Index({data}) {
                 </form>
                 <form method="post" action="/" onSubmit={(e)=> {e.preventDefault();}} id="item_update" className={indexStyles.itemIndexWrapper}>
                   <ul>
-                    {itemList} {/*動的なレイアウトは上記で定義*/}
+                    {itemList()} {/*動的なレイアウトは上記で定義*/}
                   </ul>
                 </form>
                 <input type="submit" form="item_update" value="更新" className={indexStyles.updateBtn} />
