@@ -14,15 +14,15 @@ export async function getServerSideProps() {
     body: JSON.stringify(query)
   });
 
-  let data = {};
-  data['dataProps'] = await response.json();
-  data['user_id'] = 1; // 仮
+  let default_data = {};
+  default_data['item_data_from_php'] = await response.json();
+  default_data['user_id'] = 1; // 仮
   return{
-    props: {data}
+    props: {default_data}
   }
 }
 
-export default function Index({data}) {
+export default function Index({default_data}) {
   const signArea = useRef(null);
   const updateItemNumberRefs = useRef([]);
   const itemDeleteBtnRefs = useRef([]);
@@ -66,19 +66,19 @@ export default function Index({data}) {
   }
   
   //レコードの数だけuseRefのref属性をつける(以下for文)
-  for(let i = 0; i < data['dataProps'].length; i++) {
+  for(let i = 0; i < default_data['item_data_from_php'].length; i++) {
     updateItemNumberRefs.current[i] = createRef(); //updateItemNumberRefs の配列の中に個々の ref が入っていて、参照する時は ' updateItemNumberRefs.current[i]' で呼び出す。
   }
 
-  for(let i = 0; i < data['dataProps'].length; i++) {
+  for(let i = 0; i < default_data['item_data_from_php'].length; i++) {
     itemDeleteBtnRefs.current[i] = createRef();
   }
 
-  for(let i = 0; i < data['dataProps'].length; i++) {
+  for(let i = 0; i < default_data['item_data_from_php'].length; i++) {
     purchaseStatusFlagRefs.current[i] = createRef();
   }
 
-  for(let i = 0; i < data['dataProps'].length; i++) {
+  for(let i = 0; i < default_data['item_data_from_php'].length; i++) {
     purchaseStatusBtnRefs.current[i] = createRef();
   }
 
@@ -162,115 +162,6 @@ export default function Index({data}) {
     return errorCount;
   }
 
-  //新規商品登録ボタンの役割レスポンシブの境を監視・役割切り替え
-  // function resizeObserver() {
-  //   let count = 0;
-  //   const resizeObserver  = new ResizeObserver((entries, observer)=> {
-  //     entries.forEach((entry, _)=> {
-  //       const isSmall = entry.contentRect.width <= 768;
-  //       if(isSmall) {
-  //         registItemBtn.current.type = 'button'; //ipad以下
-  //         registItemBtn.current.addEventListener('click', ()=> { //※送信ではなく、modalの表示
-  //           modalFlag.current.checked = true; //overlay表示
-  //           Overlay.current.id = 'check_registBtn_responsive_overlay';
-  //           Object.assign(Overlay.current.style, {
-  //             zIndex: 1,
-  //             display: 'block'
-  //           });
-  //           //レスポンシブの新規商品登録フォームの表示
-  //           RegistItemResponsiveWrapper.current.style.display = 'block';
-  //           RegistItemResponsiveWrapper.current.animate({
-  //             opacity: [0, 1],
-  //             transform: ['translateY(-20px)', 'translateY(0)']
-  //           }, {
-  //             fill: 'forwards',
-  //             duration: 150
-  //           });
-  //           //登録ボタン
-  //           RegistItemBtnResponsive.current.addEventListener('click', ()=> {
-  //             const errorValue = {
-  //               Item: ItemResponsive,
-  //               Price: PriceResponsive,
-  //               itemNumber: itemNumberResponsive,
-  //               errorItem: errorItemResponsive,
-  //               errorPrice: errorPriceResponsive,
-  //               errorNumber: errorNumberResponsive
-  //             }
-  //             if(errorCheck(errorValue) == 0) {
-  //               let query = {};
-  //                   query['user_id'] = data['user_id'];
-  //                   query['item_name'] = ItemResponsive.current.value;
-  //                   query['price'] = PriceResponsive.current.value;
-  //                   query['number'] = itemNumberResponsive.current.value;
-  //               (async()=> {
-  //                 const response = await fetch('/api/request?mode=regist_item', {
-  //                   method: 'POST',
-  //                   headers: {'Content-type': 'application/json'},
-  //                   body: JSON.stringify(query)
-  //                 });
-  //                 const result = await response.json();
-  //                 resetAll();
-  //                 if(result['regist_data_from_php'] == 1) {
-  //                   console.log(result['regist_data_from_php']);
-  //                   // window.location.reload();
-  //                   setRegistItemForm(!registItemForm);
-  //                 }
-  //                 else if(result['regist_data_from_php'] == 0) {
-  //                   console.log(result['regist_data_from_php']);
-  //                   errorDuplicateResponsive.current.style.display = 'block';
-  //                 }
-  //               })();
-  //               // setRegistItemForm(!registItemForm);
-  //             }
-  //           });
-  //         });
-  //       }
-  //       else {
-  //         registItemBtn.current.type = 'submit'; //pc以上
-  //         registItemBtn.current.addEventListener('click', ()=> {
-  //           count++;
-  //           console.log('pcカウント： ' + count);
-  //           const errorValue = {
-  //             Item: Item,
-  //             Price: Price,
-  //             itemNumber: itemNumber,
-  //             errorItem: errorItem,
-  //             errorPrice: errorPrice,
-  //             errorNumber: errorNumber
-  //           }
-  //           if(errorCheck(errorValue) == 0) {
-  //           //   let query = {};
-  //           //       query['user_id'] = data['user_id'];
-  //           //       query['item_name'] = Item.current.value;
-  //           //       query['price'] = Price.current.value;
-  //           //       query['number'] = itemNumber.current.value;
-  //           //   (async()=> {
-  //           //     const response = await fetch('/api/request?mode=regist_item', {
-  //           //       method: 'POST',
-  //           //       headers: {'Content-type': 'application/json'},
-  //           //       body: JSON.stringify(query)
-  //           //     });
-  //           //     const result = await response.json();
-  //           //     resetAll();
-  //           //     if(result['regist_data_from_php'] == 1) {
-  //           //       console.log(result['regist_data_from_php']);
-  //           //       // window.location.reload();
-  //           //       setRegistItemForm(!registItemForm);
-  //           //     }
-  //           //     else {
-  //           //       console.log(result['regist_data_from_php']);
-  //           //       errorDuplicate.current.style.display = 'block';
-  //           //     }
-  //           //   })();
-  //           }
-  //         });
-  //         observer.unobserve(Main.current);
-  //       }
-  //     });
-  //   });
-  //   resizeObserver.observe(Main.current);
-  // }
-
   //新規商品登録ボタンの役割レスポンシブの境を監視・役割切り替え（※実装し直した）
   function responsiveRegistBtnView() {
     const isSmall = window.innerWidth <= 768;
@@ -304,7 +195,7 @@ export default function Index({data}) {
           }
           if(errorCheck(errorValue) == 0) {
             let query = {};
-                query['user_id'] = data['user_id'];
+                query['user_id'] = default_data['user_id'];
                 query['item_name'] = ItemResponsive.current.value;
                 query['price'] = PriceResponsive.current.value;
                 query['number'] = itemNumberResponsive.current.value;
@@ -340,7 +231,7 @@ export default function Index({data}) {
         }
         if(errorCheck(errorValue) == 0) {
           let query = {};
-              query['user_id'] = data['user_id'];
+              query['user_id'] = default_data['user_id'];
               query['item_name'] = Item.current.value;
               query['price'] = Price.current.value;
               query['number'] = itemNumber.current.value;
@@ -365,7 +256,7 @@ export default function Index({data}) {
   }
 
   function reversePurchaseFlag() {
-    data['dataProps'].forEach((e, i)=> {
+    default_data['item_data_from_php'].forEach((e, i)=> {
       let Btn = purchaseStatusBtnRefs.current[i].current;
       Btn.addEventListener('click', (e)=> {
         if(e.target.innerHTML == '未') {
@@ -415,8 +306,8 @@ export default function Index({data}) {
   //※jsxに挿入する要素は関数ではなく、変数であることに注意。
   function itemList() {
     // const result = setListData();
-    return data['dataProps'].map((item, index)=> {
-      if(data['dataProps'].length >= 1) {
+    return default_data['item_data_from_php'].map((item, index)=> {
+      if(default_data['item_data_from_php'].length >= 1) {
         let statusFlag = item['purchase_status'] == 0 ? false : true;
         let purchase_status = statusFlag == false ? <span ref={purchaseStatusBtnRefs.current[index]} style={{backgroundColor: '#00187C'}}>済</span> : <span ref={purchaseStatusBtnRefs.current[index]} style={{backgroundColor: '#9F0000'}}>未</span>;
         return(
@@ -444,7 +335,7 @@ export default function Index({data}) {
 
   async function setListData() {
     let query = {};
-    query['user_id'] = data['user_id'];
+    query['user_id'] = default_data['user_id'];
     const response = await fetch('/api/request?mode=set_list_data', {
       method: 'POST',
       body: JSON.stringify(query),
@@ -456,10 +347,10 @@ export default function Index({data}) {
   }
 
   useEffect(()=> {
-    if(data['user_id'] == 1) {
+    if(default_data['user_id'] == 1) {
       // setListData();
       //個数をデータベースより反映表示
-      data['dataProps'].forEach((item, index)=> {
+      default_data['item_data_from_php'].forEach((item, index)=> {
         updateItemNumberRefs.current[index].current.value = item['number'];
       });
 
@@ -476,7 +367,7 @@ export default function Index({data}) {
     }
   }, [registItemForm]);
 
-  if(data['user_id'] == 1) {
+  if(default_data['user_id'] == 1) {
     return(
       <>
         <Head>
