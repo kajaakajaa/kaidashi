@@ -75,6 +75,7 @@
   display: none;
   color: red;
   margin: 0;
+  font-size: 0.8rem;
 }
 .overlay .modal {
   width: 60%;

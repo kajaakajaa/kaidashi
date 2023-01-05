@@ -147,15 +147,15 @@ export default function Index({data}) {
     let errorCount = 0;
     resetErrorText();
 
-    if(errorValue.Item.current.value == '' || errorValue.Item.current.value == null) {
+    if(errorValue.Item.current.value == '') {
       errorValue.errorItem.current.style.display = 'block';
       errorCount++;
     }
-    if(errorValue.Price.current.value == '' || errorValue.Price.current.value == null) {
+    if(errorValue.Price.current.value == '') {
       errorValue.errorPrice.current.style.display = 'block';
       errorCount++;
     }
-    if(errorValue.itemNumber.current.value == '' || errorValue.itemNumber.current.value == null) {
+    if(errorValue.itemNumber.current.value == '') {
       errorValue.errorNumber.current.style.display = 'block';
       errorCount++;
     }
@@ -163,108 +163,205 @@ export default function Index({data}) {
   }
 
   //新規商品登録ボタンの役割レスポンシブの境を監視・役割切り替え
-  function resizeObserver() {
-    const resizeObserver  = new ResizeObserver((entries)=> {
-      entries.forEach((entry, _)=> {
-        const isSmall = entry.contentRect.width <= 768;
-        if(isSmall) {
-          registItemBtn.current.type = 'button'; //ipad以下
-          registItemBtn.current.addEventListener('click', ()=> { //※送信ではなく、modalの表示
-            modalFlag.current.checked = true; //overlay表示
-            Overlay.current.id = 'check_registBtn_responsive_overlay';
-            Object.assign(Overlay.current.style, {
-              zIndex: 1,
-              display: 'block'
-            });
-            //レスポンシブの新規商品登録フォームの表示
-            RegistItemResponsiveWrapper.current.style.display = 'block';
-            RegistItemResponsiveWrapper.current.animate({
-              opacity: [0, 1],
-              transform: ['translateY(-20px)', 'translateY(0)']
-            }, {
-              fill: 'forwards',
-              duration: 150
-            });
-            //登録ボタン
-            RegistItemBtnResponsive.current.addEventListener('click', ()=> {
-              const errorValue = {
-                Item: ItemResponsive,
-                Price: PriceResponsive,
-                itemNumber: itemNumberResponsive,
-                errorItem: errorItemResponsive,
-                errorPrice: errorPriceResponsive,
-                errorNumber: errorNumberResponsive
+  // function resizeObserver() {
+  //   let count = 0;
+  //   const resizeObserver  = new ResizeObserver((entries, observer)=> {
+  //     entries.forEach((entry, _)=> {
+  //       const isSmall = entry.contentRect.width <= 768;
+  //       if(isSmall) {
+  //         registItemBtn.current.type = 'button'; //ipad以下
+  //         registItemBtn.current.addEventListener('click', ()=> { //※送信ではなく、modalの表示
+  //           modalFlag.current.checked = true; //overlay表示
+  //           Overlay.current.id = 'check_registBtn_responsive_overlay';
+  //           Object.assign(Overlay.current.style, {
+  //             zIndex: 1,
+  //             display: 'block'
+  //           });
+  //           //レスポンシブの新規商品登録フォームの表示
+  //           RegistItemResponsiveWrapper.current.style.display = 'block';
+  //           RegistItemResponsiveWrapper.current.animate({
+  //             opacity: [0, 1],
+  //             transform: ['translateY(-20px)', 'translateY(0)']
+  //           }, {
+  //             fill: 'forwards',
+  //             duration: 150
+  //           });
+  //           //登録ボタン
+  //           RegistItemBtnResponsive.current.addEventListener('click', ()=> {
+  //             const errorValue = {
+  //               Item: ItemResponsive,
+  //               Price: PriceResponsive,
+  //               itemNumber: itemNumberResponsive,
+  //               errorItem: errorItemResponsive,
+  //               errorPrice: errorPriceResponsive,
+  //               errorNumber: errorNumberResponsive
+  //             }
+  //             if(errorCheck(errorValue) == 0) {
+  //               let query = {};
+  //                   query['user_id'] = data['user_id'];
+  //                   query['item_name'] = ItemResponsive.current.value;
+  //                   query['price'] = PriceResponsive.current.value;
+  //                   query['number'] = itemNumberResponsive.current.value;
+  //               (async()=> {
+  //                 const response = await fetch('/api/request?mode=regist_item', {
+  //                   method: 'POST',
+  //                   headers: {'Content-type': 'application/json'},
+  //                   body: JSON.stringify(query)
+  //                 });
+  //                 const result = await response.json();
+  //                 resetAll();
+  //                 if(result['regist_data_from_php'] == 1) {
+  //                   console.log(result['regist_data_from_php']);
+  //                   // window.location.reload();
+  //                   setRegistItemForm(!registItemForm);
+  //                 }
+  //                 else if(result['regist_data_from_php'] == 0) {
+  //                   console.log(result['regist_data_from_php']);
+  //                   errorDuplicateResponsive.current.style.display = 'block';
+  //                 }
+  //               })();
+  //               // setRegistItemForm(!registItemForm);
+  //             }
+  //           });
+  //         });
+  //       }
+  //       else {
+  //         registItemBtn.current.type = 'submit'; //pc以上
+  //         registItemBtn.current.addEventListener('click', ()=> {
+  //           count++;
+  //           console.log('pcカウント： ' + count);
+  //           const errorValue = {
+  //             Item: Item,
+  //             Price: Price,
+  //             itemNumber: itemNumber,
+  //             errorItem: errorItem,
+  //             errorPrice: errorPrice,
+  //             errorNumber: errorNumber
+  //           }
+  //           if(errorCheck(errorValue) == 0) {
+  //           //   let query = {};
+  //           //       query['user_id'] = data['user_id'];
+  //           //       query['item_name'] = Item.current.value;
+  //           //       query['price'] = Price.current.value;
+  //           //       query['number'] = itemNumber.current.value;
+  //           //   (async()=> {
+  //           //     const response = await fetch('/api/request?mode=regist_item', {
+  //           //       method: 'POST',
+  //           //       headers: {'Content-type': 'application/json'},
+  //           //       body: JSON.stringify(query)
+  //           //     });
+  //           //     const result = await response.json();
+  //           //     resetAll();
+  //           //     if(result['regist_data_from_php'] == 1) {
+  //           //       console.log(result['regist_data_from_php']);
+  //           //       // window.location.reload();
+  //           //       setRegistItemForm(!registItemForm);
+  //           //     }
+  //           //     else {
+  //           //       console.log(result['regist_data_from_php']);
+  //           //       errorDuplicate.current.style.display = 'block';
+  //           //     }
+  //           //   })();
+  //           }
+  //         });
+  //         observer.unobserve(Main.current);
+  //       }
+  //     });
+  //   });
+  //   resizeObserver.observe(Main.current);
+  // }
+
+  //新規商品登録ボタンの役割レスポンシブの境を監視・役割切り替え（※実装し直した）
+  function responsiveRegistBtnView() {
+    const isSmall = window.innerWidth <= 768;
+    if(isSmall) {
+      registItemBtn.current.type = 'button'; //ipad以下
+      registItemBtn.current.addEventListener('click', ()=> { //※送信ではなく、modalの表示
+        modalFlag.current.checked = true; //overlay表示
+        Overlay.current.id = 'check_registBtn_responsive_overlay';
+        Object.assign(Overlay.current.style, {
+          zIndex: 1,
+          display: 'block'
+        });
+        //レスポンシブの新規商品登録フォームの表示
+        RegistItemResponsiveWrapper.current.style.display = 'block';
+        RegistItemResponsiveWrapper.current.animate({
+          opacity: [0, 1],
+          transform: ['translateY(-20px)', 'translateY(0)']
+        }, {
+          fill: 'forwards',
+          duration: 150
+        });
+        //登録ボタン
+        RegistItemBtnResponsive.current.addEventListener('click', ()=> {
+          const errorValue = {
+            Item: ItemResponsive,
+            Price: PriceResponsive,
+            itemNumber: itemNumberResponsive,
+            errorItem: errorItemResponsive,
+            errorPrice: errorPriceResponsive,
+            errorNumber: errorNumberResponsive
+          }
+          if(errorCheck(errorValue) == 0) {
+            let query = {};
+                query['user_id'] = data['user_id'];
+                query['item_name'] = ItemResponsive.current.value;
+                query['price'] = PriceResponsive.current.value;
+                query['number'] = itemNumberResponsive.current.value;
+            (async()=> {
+              const response = await fetch('/api/request?mode=regist_item', {
+                method: 'POST',
+                headers: {'Content-type': 'application/json'},
+                body: JSON.stringify(query)
+              });
+              const result = await response.json();
+              resetAll();
+              if(result['regist_data_from_php'] == 1) {
+                window.location.reload();
               }
-              if(errorCheck(errorValue) == 0) {
-                let query = {};
-                    query['user_id'] = data['user_id'];
-                    query['item_name'] = ItemResponsive.current.value;
-                    query['price'] = PriceResponsive.current.value;
-                    query['number'] = itemNumberResponsive.current.value;
-                (async()=> {
-                  const response = await fetch('/api/request?mode=regist_item', {
-                    method: 'POST',
-                    headers: {'Content-type': 'application/json'},
-                    body: JSON.stringify(query)
-                  });
-                  const result = await response.json();
-                  resetAll();
-                  if(result['regist_data_from_php'] == 1) {
-                    console.log(result['regist_data_from_php']);
-                    // window.location.reload();
-                    setRegistItemForm(!registItemForm);
-                  }
-                  else if(result['regist_data_from_php'] == 0) {
-                    console.log(result['regist_data_from_php']);
-                    errorDuplicateResponsive.current.style.display = 'block';
-                  }
-                })();
-                // setRegistItemForm(!registItemForm);
+              else if(result['regist_data_from_php'] == 0) {
+                errorDuplicateResponsive.current.style.display = 'block';
               }
-            });
-          });
+            })();
+          }
+        });
+      });
+    }
+    else {
+      registItemBtn.current.type = 'submit'; //pc以上
+      registItemBtn.current.addEventListener('click', ()=> {
+        const errorValue = {
+          Item: Item,
+          Price: Price,
+          itemNumber: itemNumber,
+          errorItem: errorItem,
+          errorPrice: errorPrice,
+          errorNumber: errorNumber
         }
-        else {
-          registItemBtn.current.type = 'submit'; //pc以上
-          registItemBtn.current.addEventListener('click', ()=> {
-            const errorValue = {
-              Item: Item,
-              Price: Price,
-              itemNumber: itemNumber,
-              errorItem: errorItem,
-              errorPrice: errorPrice,
-              errorNumber: errorNumber
+        if(errorCheck(errorValue) == 0) {
+          let query = {};
+              query['user_id'] = data['user_id'];
+              query['item_name'] = Item.current.value;
+              query['price'] = Price.current.value;
+              query['number'] = itemNumber.current.value;
+          (async()=> {
+            const response = await fetch('/api/request?mode=regist_item', {
+              method: 'POST',
+              headers: {'Content-type': 'application/json'},
+              body: JSON.stringify(query)
+            });
+            const result = await response.json();
+            resetAll();
+            if(result['regist_data_from_php'] == 1) {
+              window.location.reload();
             }
-            if(errorCheck(errorValue) == 0) {
-              let query = {};
-                  query['user_id'] = data['user_id'];
-                  query['item_name'] = Item.current.value;
-                  query['price'] = Price.current.value;
-                  query['number'] = itemNumber.current.value;
-              (async()=> {
-                const response = await fetch('/api/request?mode=regist_item', {
-                  method: 'POST',
-                  headers: {'Content-type': 'application/json'},
-                  body: JSON.stringify(query)
-                });
-                const result = await response.json();
-                resetAll();
-                if(result['regist_data_from_php'] == 1) {
-                  console.log(result['regist_data_from_php']);
-                  // window.location.reload();
-                  setRegistItemForm(!registItemForm);
-                }
-                else {
-                  console.log(result['regist_data_from_php']);
-                  errorDuplicate.current.style.display = 'block';
-                }
-              })();
+            else {
+              errorDuplicate.current.style.display = 'block';
             }
-          });
+          })();
         }
       });
-    });
-    resizeObserver.observe(Main.current);
+    }
   }
 
   function reversePurchaseFlag() {
@@ -360,7 +457,7 @@ export default function Index({data}) {
 
   useEffect(()=> {
     if(data['user_id'] == 1) {
-      setListData();
+      // setListData();
       //個数をデータベースより反映表示
       data['dataProps'].forEach((item, index)=> {
         updateItemNumberRefs.current[index].current.value = item['number'];
@@ -370,7 +467,8 @@ export default function Index({data}) {
       signAreaShow();
       Observer(observerDoms);
       reversePurchaseFlag()
-      resizeObserver();
+      // resizeObserver();
+      responsiveRegistBtnView();
     }
     
     return()=> {
