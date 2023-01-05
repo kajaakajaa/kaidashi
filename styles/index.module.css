@@ -120,7 +120,7 @@
 }
 @media (max-width: 576px) {
   .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex {
-    grid-template-columns: 18% auto 15% 15%;
+    grid-template-columns: 25% auto 15% 12%;
   }
 }
 .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div {
