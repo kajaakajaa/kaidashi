@@ -49,7 +49,6 @@ export default function Modal() {
         });
       }, 100);
       indexValue.resetAll();
-      console.log(indexValue.resetAll);
     }
   }
 
