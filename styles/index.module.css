@@ -120,7 +120,7 @@
 }
 @media (max-width: 576px) {
   .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex {
-    grid-template-columns: 25% auto 15% 12%;
+    grid-template-columns: 25% auto 0 15% 15%;
   }
 }
 .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div {
@@ -257,6 +257,7 @@
 .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:last-child {
   text-decoration: underline;
   align-items: center;
+  padding: 0.5rem 0.9rem;
 }
 @media (max-width: 576px) {
   .container .main .mainWrapper .itemIndexWrapper > ul .itemIndex > div:last-child {
