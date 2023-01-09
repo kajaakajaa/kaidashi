@@ -7,7 +7,8 @@ export default function Modal() {
   const indexValue = useContext(IndexContainerContext);
 
   function overLayClose() {
-    if(indexValue.Overlay.current.id == 'check_sign_out_overlay' || indexValue.Overlay.current.id == 'delete_acount_overlay') {
+    if(indexValue.Overlay.current.id == 'check_sign_out_overlay' || indexValue.Overlay.current.id == 'delete_acount_overlay' ||
+        indexValue.Overlay.current.id == 'check_deleteBtn_overlay') {
       indexValue.modalRef.current.animate({
         transform: ['translateY(0px)', 'translateY(-50px)'],
         visibility: ['visible', 'hidden'],
@@ -30,7 +31,7 @@ export default function Modal() {
       indexValue.hamburgerOpenflag.current.checked = false;
     }
     else if(indexValue.Overlay.current.id == 'check_registBtn_responsive_overlay') {
-      indexValue.modalFlag.current.checked = false; //overlay表示
+      indexValue.modalFlag.current.checked = false; //overlay非表示
       indexValue.Overlay.current.id = '';
       //レスポンシブの新規商品登録フォームの非表示
       indexValue.RegistItemResponsiveWrapper.current.animate({
@@ -52,7 +53,7 @@ export default function Modal() {
     }
   }
 
-  function YesBtn(e, status) {
+  function modalBtn(e, status) {
     if(status == 'yes') {
       let id = e.target.id;
       if(id == 'check_sign_out') {
@@ -60,6 +61,12 @@ export default function Modal() {
       }
       else if(id == 'delete_acount') {
         overLayClose();
+      }
+      else if(id == 'check_deleteBtn_yes') {
+        // (async()=> {
+        //   let query = {};
+        //       query['user_id'] = user
+        // })();
       }
     }
     else if(status == 'no') {
@@ -76,8 +83,8 @@ export default function Modal() {
           <div className={modalStyles.modalBody} ref={indexValue.modalBody}></div>
           <div className={modalStyles.modalFooter} ref={indexValue.modalFooter}>
             <div>
-              <button onClick={(e)=> {YesBtn(e, 'yes')}} ref={indexValue.yesBtn}>yes</button>
-              <button onClick={(e)=> {YesBtn(e, 'no')}}>no</button>
+              <button onClick={(e)=> {modalBtn(e, 'yes')}} ref={indexValue.yesBtn}>yes</button>
+              <button onClick={(e)=> {modalBtn(e, 'no')}}>no</button>
             </div>
           </div>
         </div>
