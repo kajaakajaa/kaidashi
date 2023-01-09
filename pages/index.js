@@ -83,6 +83,7 @@ export default function Index({default_data}) {
   }
 
   const value = {
+    deleteConfirm: deleteConfirm,
     signArea: signArea,
     hamburgerClose: hamburgerClose,
     hamburgerBtn: hamburgerBtn,
@@ -303,9 +304,23 @@ export default function Index({default_data}) {
     });
   }
 
-  //※jsxに挿入する要素は関数ではなく、変数であることに注意。
+  function deleteConfirm(menu_id, user_id) {
+    modalFlag.current.checked = true; //overlay表示
+    Overlay.current.id = 'check_deleteBtn_overlay';
+    Overlay.current.style.zIndex = 1;
+    yesBtn.current.id = 'check_deleteBtn_yes';
+    modalBody.current.innerHTML = '商品を削除しても宜しいですか？';
+    modalRef.current.animate({
+      transform: ['translateY(-50px)', 'translateY(0px)'],
+      visibility: ['hidden', 'visible'],
+      opacity: [0, 1]
+    },{
+      fill: 'forwards',
+      duration: 150
+    });
+  }
+
   function itemList() {
-    // const result = setListData();
     return default_data['item_data_from_php'].map((item, index)=> {
       if(default_data['item_data_from_php'].length >= 1) {
         let statusFlag = item['purchase_status'] == 0 ? false : true;
@@ -326,29 +341,15 @@ export default function Index({default_data}) {
               <input type="checkbox" name="status_flag" id={"status_flag" + index} ref={purchaseStatusFlagRefs.current[index]} defaultChecked={statusFlag} />
               <label htmlFor={"status_flag" + index}>{purchase_status}</label>
             </div>
-            <div ref={itemDeleteBtnRefs.current[index]}><span>削除</span></div>
+            <div ref={itemDeleteBtnRefs.current[index]}><span onClick={()=> {deleteConfirm()}}>削除</span></div>
           </li>
         )
       }
     });
   }
 
-  async function setListData() {
-    let query = {};
-    query['user_id'] = default_data['user_id'];
-    const response = await fetch('/api/request?mode=set_list_data', {
-      method: 'POST',
-      body: JSON.stringify(query),
-      headers: {'Content-type': 'application/json'}
-    });
-    const result = await response.json();
-    console.log(result);
-    return result;
-  }
-
   useEffect(()=> {
     if(default_data['user_id'] == 1) {
-      // setListData();
       //個数をデータベースより反映表示
       default_data['item_data_from_php'].forEach((item, index)=> {
         updateItemNumberRefs.current[index].current.value = item['number'];
@@ -358,7 +359,6 @@ export default function Index({default_data}) {
       signAreaShow();
       Observer(observerDoms);
       reversePurchaseFlag()
-      // resizeObserver();
       responsiveRegistBtnView();
     }
     
