@@ -37,7 +37,7 @@
     @media(max-width: 767px) {
       height: 60%;
     }
-    @media(max-width: 576px) {
+    @media(max-width: 575px) {
       height: 70%;
       width: 90%;
     }
@@ -112,6 +112,8 @@
       border-radius: 5px;
       @media(max-width: 575px) {
         font-size: 1rem;
+        padding: 1rem;
+        text-align: center;
       }
     }
 

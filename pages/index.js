@@ -159,7 +159,6 @@ export default function Index({default_data}) {
   }
 
   //子コンポーネントmodal内'yes/no'ボタン
-  // function YesBtn() {
   function modalBtn(e, status) {
     if(status == 'yes') {
       let id = e.target.id;
@@ -179,8 +178,6 @@ export default function Index({default_data}) {
             body: JSON.stringify(query),
             headers: {'Content-type': 'application/json'}
           });
-          // const result = await response.json();
-          // console.log(result);
           overLayClose();
           window.location.reload();
         })();
@@ -391,12 +388,12 @@ export default function Index({default_data}) {
     });
   }
 
-  function deleteConfirm(menu_id, user_id) {
+  function deleteConfirm(menu_id, user_id, item_name) {
     modalFlag.current.checked = true; //overlay表示
     Overlay.current.id = 'check_deleteBtn_overlay';
     Overlay.current.style.zIndex = 1;
     yesBtn.current.id = 'check_deleteBtn_yes';
-    modalBody.current.innerHTML = '商品を削除しても宜しいですか？';
+    modalBody.current.innerHTML =  `'${item_name}'` + ' を削除しても宜しいですか？';
     modalRef.current.animate({
       transform: ['translateY(-50px)', 'translateY(0px)'],
       visibility: ['hidden', 'visible'],
@@ -432,7 +429,7 @@ export default function Index({default_data}) {
               <input type="checkbox" name="status_flag" id={"status_flag" + index} ref={purchaseStatusFlagRefs.current[index]} defaultChecked={statusFlag} />
               <label htmlFor={"status_flag" + index}>{purchase_status}</label>
             </div>
-            <div ref={itemDeleteBtnRefs.current[index]}><span onClick={()=> {deleteConfirm(item.id, default_data.user_id)}}>削除</span></div>
+            <div ref={itemDeleteBtnRefs.current[index]}><span onClick={()=> {deleteConfirm(item.id, default_data.user_id, item.item_name)}}>削除</span></div>
           </li>
         )
       }
