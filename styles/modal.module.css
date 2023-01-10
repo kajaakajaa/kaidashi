@@ -37,7 +37,7 @@
     height: 60%;
   }
 }
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .overlay .RegistItemResponsiveWrapper {
     height: 70%;
     width: 90%;
@@ -111,6 +111,8 @@
 @media (max-width: 575px) {
   .overlay .modal .modalBody {
     font-size: 1rem;
+    padding: 1rem;
+    text-align: center;
   }
 }
 .overlay .modal .modalFooter {

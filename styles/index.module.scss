@@ -160,6 +160,9 @@
               & > span {
                 cursor: pointer;
                 text-decoration: underline;
+                @media(max-width: 576px) {
+                  font-weight: bold;
+                }
 
                 &:hover {
                   color: rgb(227, 227, 227);
