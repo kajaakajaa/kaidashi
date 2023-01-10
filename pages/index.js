@@ -39,8 +39,9 @@ export default function Index({default_data}) {
   const errorItem = useRef(null);
   const errorPrice = useRef(null);
   const errorNumber = useRef(null);
-  const [registItemForm, setRegistItemForm] = useState(false);
+  // const [registItemForm, setRegistItemForm] = useState(false);
   const errorDuplicate = useRef(null);
+  const [itemData, setItemData] = useState({});
   //modal系
   const modalFlag = useRef(null);
   const Overlay = useRef(null);
@@ -83,6 +84,9 @@ export default function Index({default_data}) {
   }
 
   const value = {
+    //modal類
+    modalBtn: modalBtn,
+    overLayClose: overLayClose,
     deleteConfirm: deleteConfirm,
     signArea: signArea,
     hamburgerClose: hamburgerClose,
@@ -103,7 +107,88 @@ export default function Index({default_data}) {
     errorPriceResponsive: errorPriceResponsive,
     errorNumberResponsive: errorNumberResponsive,
     errorDuplicateResponsive: errorDuplicateResponsive,
-    resetAll: resetAll
+    resetAll: resetAll,
+    itemData: itemData
+  }
+
+  function overLayClose() {
+    if(Overlay.current.id == 'check_sign_out_overlay' || Overlay.current.id == 'delete_acount_overlay' ||
+        Overlay.current.id == 'check_deleteBtn_overlay') {
+      modalRef.current.animate({
+        transform: ['translateY(0px)', 'translateY(-50px)'],
+        visibility: ['visible', 'hidden'],
+        opacity: [1, 0]
+      },{
+        fill: 'forwards',
+        duration: 150
+      });
+      modalFlag.current.checked = false;
+      Overlay.current.style.zIndex = 'auto';
+      Overlay.current.id = '';
+      modalBody.current.innerHTML = '';
+      hamburgerOpenflag.current.checked = false;
+      yesBtn.current.id = '';
+    }
+    else if(Overlay.current.id == 'hamburger_open_overlay') {
+      modalFlag.current.checked = false;
+      Overlay.current.style.zIndex = 'auto';
+      Overlay.current.id = '';
+      hamburgerOpenflag.current.checked = false;
+    }
+    else if(Overlay.current.id == 'check_registBtn_responsive_overlay') {
+      modalFlag.current.checked = false; //overlay非表示
+      Overlay.current.id = '';
+      //レスポンシブの新規商品登録フォームの非表示
+      RegistItemResponsiveWrapper.current.animate({
+        opacity: [1, 0],
+        transform: ['translateY(0)', 'translateY(-50px)']
+      }, {
+        fill: 'forwards',
+        duration: 150
+      });
+      
+      setTimeout(()=> {
+        RegistItemResponsiveWrapper.current.style.display = 'none';
+        Object.assign(Overlay.current.style, {
+          zIndex: 'auto',
+          display: 'flex'
+        });
+      }, 100);
+      resetAll();
+    }
+  }
+
+  //子コンポーネントmodal内'yes/no'ボタン
+  // function YesBtn() {
+  function modalBtn(e, status) {
+    if(status == 'yes') {
+      let id = e.target.id;
+      if(id == 'check_sign_out') {
+        overLayClose();
+      }
+      else if(id == 'delete_acount') {
+        overLayClose();
+      }
+      else if(id == 'check_deleteBtn_yes') {
+        (async()=> {
+          let query = {};
+              query['user_id'] = itemData['user_id'];
+              query['menu_id'] = itemData['menu_id'];
+          fetch('/api/request?mode=delete_item', {
+            method: 'POST',
+            body: JSON.stringify(query),
+            headers: {'Content-type': 'application/json'}
+          });
+          // const result = await response.json();
+          // console.log(result);
+          overLayClose();
+          window.location.reload();
+        })();
+      }
+    }
+    else if(status == 'no') {
+      overLayClose();
+    }
   }
 
   //ログアウト・退会エリアの表示
@@ -118,6 +203,7 @@ export default function Index({default_data}) {
     });
   }
 
+  //エラーメッセージ群を非表示
   function resetErrorText() {
     //pc
     errorItem.current.style.display = 'none';
@@ -131,6 +217,7 @@ export default function Index({default_data}) {
     errorDuplicateResponsive.current.style.display = 'none';
   }
 
+  //フォームの値＋エラーメッセージ群を非表示
   function resetAll() {
     //pc
     Item.current.value = '';
@@ -318,6 +405,10 @@ export default function Index({default_data}) {
       fill: 'forwards',
       duration: 150
     });
+    setItemData({
+      menu_id: menu_id,
+      user_id: user_id
+    });
   }
 
   function itemList() {
@@ -341,7 +432,7 @@ export default function Index({default_data}) {
               <input type="checkbox" name="status_flag" id={"status_flag" + index} ref={purchaseStatusFlagRefs.current[index]} defaultChecked={statusFlag} />
               <label htmlFor={"status_flag" + index}>{purchase_status}</label>
             </div>
-            <div ref={itemDeleteBtnRefs.current[index]}><span onClick={()=> {deleteConfirm()}}>削除</span></div>
+            <div ref={itemDeleteBtnRefs.current[index]}><span onClick={()=> {deleteConfirm(item.id, default_data.user_id)}}>削除</span></div>
           </li>
         )
       }
@@ -356,16 +447,17 @@ export default function Index({default_data}) {
       });
 
       //ログアウト・退会の表示
-      signAreaShow();
+      signAreaShow();//__
       Observer(observerDoms);
       reversePurchaseFlag()
       responsiveRegistBtnView();
+      // YesBtn();
     }
     
     return()=> {
       resetAll();
     }
-  }, [registItemForm]);
+  });
 
   if(default_data['user_id'] == 1) {
     return(
